@@ -19,7 +19,30 @@
   font-display: swap;
   src: url(../assets/fonts/Merriweather/Merriweather-Regular.ttf) format("truetype");
 }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   background-color: #000;
   color: #fff;
+}
+
+h1,
+h2,
+h3,
+ul,
+li,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px;
 }

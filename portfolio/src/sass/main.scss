@@ -1,9 +1,8 @@
 // fonts
 @import "typography";
 
-$body-color: #000;
+// variables
+@import "colors";
 
-body {
-  background-color: $body-color;
-  color: #fff;
-}
+// grid
+@import "base";
