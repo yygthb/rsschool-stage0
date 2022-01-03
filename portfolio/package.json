@@ -1,0 +1,16 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "html css landing",
+  "main": "index.html",
+  "scripts": {
+    "build": "sass --no-source-map src/sass/main.scss styles/style.css",
+    "start": "sass --no-source-map --watch src/sass/main.scss styles/style.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "yura.ya.dev@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.45.2"
+  }
+}
