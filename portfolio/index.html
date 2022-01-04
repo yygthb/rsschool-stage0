@@ -17,7 +17,45 @@
 
   <body>
     <header class="header">
-      <div class="container"></div>
+      <div class="container">
+        <div class="header-container">
+          <a href="#" class="logo" title="home">
+            <svg class="logo-icon">
+              <use xlink:href="./assets/svg/sprite.svg#logo"></use>
+            </svg>
+          </a>
+          <nav class="nav">
+            <ul class="nav-list">
+              <li class="nav-item"><a href="#" class="nav-link">Skills</a></li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Portfolio</a>
+              </li>
+              <li class="nav-item"><a href="#" class="nav-link">Video</a></li>
+              <li class="nav-item"><a href="#" class="nav-link">Price</a></li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Contacts</a>
+              </li>
+            </ul>
+          </nav>
+          <div class="lang">
+            <input
+              class="lang-input"
+              type="radio"
+              name="lang"
+              id="en"
+              checked
+            />
+            <label class="lang-label" for="en" title="change language to EN"
+              >en</label
+            >
+            <input class="lang-input" type="radio" name="lang" id="ru" />
+            /
+            <label class="lang-label" for="ru" title="change language to RU"
+              >ru</label
+            >
+          </div>
+        </div>
+      </div>
     </header>
 
     <main class="main">
