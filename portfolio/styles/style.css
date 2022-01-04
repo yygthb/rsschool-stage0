@@ -70,24 +70,6 @@ li {
   list-style: none;
 }
 
-.button {
-  display: block;
-  width: 220px;
-  height: 55px;
-  font-size: 20px;
-  line-height: 50px;
-  text-align: center;
-  align-items: flex-start;
-  background-color: #bdae82;
-  color: #000;
-  border: none;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-.button:hover {
-  color: #fff;
-}
-
 .title-container {
   position: relative;
   width: 50%;
@@ -114,6 +96,24 @@ li {
   line-height: 80px;
   text-transform: capitalize;
   background-color: #000;
+}
+
+.button {
+  display: block;
+  width: 220px;
+  height: 55px;
+  font-size: 20px;
+  line-height: 50px;
+  text-align: center;
+  align-items: flex-start;
+  background-color: #bdae82;
+  color: #000;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.button:hover {
+  color: #fff;
 }
 
 .header .header-container {
