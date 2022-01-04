@@ -70,6 +70,24 @@ li {
   list-style: none;
 }
 
+.button {
+  display: block;
+  width: 220px;
+  height: 55px;
+  font-size: 20px;
+  line-height: 50px;
+  text-align: center;
+  align-items: flex-start;
+  background-color: #bdae82;
+  color: #000;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.button:hover {
+  color: #fff;
+}
+
 .header .header-container {
   display: flex;
   align-items: center;
@@ -113,4 +131,27 @@ li {
 }
 .header .header-container .lang .lang-label:hover {
   color: #bdae82;
+}
+
+.hero {
+  display: flex;
+  height: 910px;
+  margin: -90px -20px 0 -20px;
+  background: url("../assets/img/hero-bg.jpg") no-repeat center;
+  background-size: cover;
+}
+.hero .hero-content {
+  width: 500px;
+  margin-top: 250px;
+  margin-left: 80px;
+}
+.hero .hero-content .hero-title {
+  margin-bottom: 10px;
+  font-size: 60px;
+  line-height: 120px;
+}
+.hero .hero-content .hero-info {
+  font-size: 20px;
+  line-height: 40px;
+  margin-bottom: 25px;
 }

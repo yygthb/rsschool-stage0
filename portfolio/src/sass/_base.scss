@@ -49,3 +49,22 @@ p {
 li {
   list-style: none;
 }
+
+.button {
+  display: block;
+  width: 220px;
+  height: 55px;
+  font-size: 20px;
+  line-height: 50px;
+  text-align: center;
+  align-items: flex-start;
+  background-color: $color-primary;
+  color: $color-black;
+  border: none;
+  cursor: pointer;
+  transition: color $hover-animation-speed ease;
+
+  &:hover {
+    color: $color-white;
+  }
+}

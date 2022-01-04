@@ -1,0 +1,25 @@
+.hero {
+  display: flex;
+  height: 910px;
+  margin: -90px -20px 0 -20px;
+  background: url("../assets/img/hero-bg.jpg") no-repeat center;
+  background-size: cover;
+
+  .hero-content {
+    width: 500px;
+    margin-top: 250px;
+    margin-left: 80px;
+
+    .hero-title {
+      margin-bottom: 10px;
+      font-size: 60px;
+      line-height: 120px;
+    }
+
+    .hero-info {
+      font-size: 20px;
+      line-height: 40px;
+      margin-bottom: 25px;
+    }
+  }
+}
