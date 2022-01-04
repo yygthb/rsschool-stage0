@@ -30,7 +30,7 @@
 }
 
 .button {
-  display: block;
+  display: inline-block;
   width: 220px;
   height: 55px;
   font-size: 20px;
@@ -45,5 +45,11 @@
 
   &:hover {
     color: $color-white;
+  }
+
+  &-inactive {
+    background-color: transparent;
+    border: 2px solid $color-primary;
+    color: $color-primary;
   }
 }
