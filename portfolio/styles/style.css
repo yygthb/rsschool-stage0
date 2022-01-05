@@ -301,3 +301,44 @@ li {
   font-size: 18px;
   line-height: 36px;
 }
+
+.contacts {
+  background: url("../assets/img/contacts-bg.jpg") no-repeat center;
+  background-size: cover;
+  height: 700px;
+  width: 100%;
+}
+.contacts .container {
+  padding-top: 60px;
+}
+.contacts .container .contacts-form {
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  margin-left: auto;
+}
+.contacts .container .contacts-form .form-title {
+  margin-bottom: 40px;
+  font-size: 40px;
+  line-height: 80px;
+  color: #bdae82;
+}
+.contacts .container .contacts-form .form-input {
+  margin-bottom: 20px;
+  padding: 5px 20px;
+  border: 2px solid #bdae82;
+  background-color: transparent;
+  font-size: 20px;
+  line-height: 40px;
+  color: #bdae82;
+}
+.contacts .container .contacts-form .form-input::placeholder {
+  color: #bdae82;
+}
+.contacts .container .contacts-form .form-input:focus {
+  outline: 1px solid transparent;
+}
+.contacts .container .contacts-form .form-input.form-textarea {
+  height: 100px;
+  resize: none;
+}
