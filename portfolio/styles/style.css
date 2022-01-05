@@ -342,3 +342,40 @@ li {
   height: 100px;
   resize: none;
 }
+
+.footer-content {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  line-height: 50px;
+}
+.footer-content .copyright {
+  width: 25%;
+}
+.footer-content .copyright-year {
+  margin-left: 20px;
+}
+.footer-content .copyright-github {
+  margin-left: 20px;
+}
+.footer-content .social-items {
+  width: 25%;
+  display: flex;
+}
+.footer-content .social-items .social-item {
+  margin-left: 20px;
+}
+.footer-content .social-items .social-item:first-child {
+  margin-left: auto;
+}
+.footer-content .social-items .social-item .social-icon {
+  width: 32px;
+  height: 32px;
+  fill: #fff;
+  transition: fill 0.3s ease;
+}
+.footer-content .social-items .social-item .social-icon:hover {
+  fill: #bdae82;
+}

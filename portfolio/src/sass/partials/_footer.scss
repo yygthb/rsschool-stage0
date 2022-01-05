@@ -1,0 +1,46 @@
+.footer {
+  &-content {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    line-height: 50px;
+
+    .copyright {
+      width: 25%;
+
+      &-year {
+        margin-left: 20px;
+      }
+
+      &-github {
+        margin-left: 20px;
+      }
+    }
+
+    .social-items {
+      width: 25%;
+      display: flex;
+
+      .social-item {
+        margin-left: 20px;
+
+        &:first-child {
+          margin-left: auto;
+        }
+
+        .social-icon {
+          width: 32px;
+          height: 32px;
+          fill: $color-white;
+          transition: fill $hover-animation-speed ease;
+
+          &:hover {
+            fill: $color-primary;
+          }
+        }
+      }
+    }
+  }
+}
