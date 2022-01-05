@@ -244,3 +244,24 @@ li {
   flex-basis: 0;
   flex-grow: 1;
 }
+
+.video-container {
+  position: relative;
+}
+.video-container .video-player {
+  display: block;
+  width: 100%;
+}
+.video-container .play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 130px;
+  height: 130px;
+  fill: #fff;
+  cursor: pointer;
+}
+.video-container .play-button:hover {
+  fill: #bdae82;
+}

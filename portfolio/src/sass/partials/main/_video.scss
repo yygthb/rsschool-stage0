@@ -1,0 +1,25 @@
+.video {
+  &-container {
+    position: relative;
+
+    .video-player {
+      display: block;
+      width: 100%;
+    }
+
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 130px;
+      height: 130px;
+      fill: $color-white;
+      cursor: pointer;
+
+      &:hover {
+        fill: $color-primary;
+      }
+    }
+  }
+}
