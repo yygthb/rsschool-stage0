@@ -58,6 +58,7 @@ a:hover {
 
 h1,
 h2,
+h4,
 h3,
 ul,
 li,
@@ -150,8 +151,9 @@ li {
   text-transform: capitalize;
 }
 .header .header-container .lang {
-  margin-left: 30px;
+  margin-left: 40px;
   font-size: 20px;
+  font-weight: 700;
 }
 .header .header-container .lang .lang-input {
   display: none;
@@ -166,6 +168,9 @@ li {
 .header .header-container .lang .lang-label:hover {
   color: #bdae82;
 }
+.header .header-container .lang .lang-divider {
+  margin: 0 5px;
+}
 
 .hero {
   display: flex;
@@ -175,7 +180,7 @@ li {
   background-size: cover;
 }
 .hero .hero-content {
-  width: 500px;
+  width: 480px;
   margin-top: 250px;
   margin-left: 80px;
 }
@@ -200,6 +205,7 @@ li {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 20px;
 }
 .skills-items .skills-item__icon {
   width: 62px;
@@ -282,7 +288,7 @@ li {
 .price-cards .price-card {
   flex-basis: 0;
   flex-grow: 1;
-  padding: 43px;
+  padding: 41px;
   border: 3px solid #bdae82;
   text-align: center;
 }
@@ -332,7 +338,7 @@ li {
 .contacts .container .contacts-form .form-input,
 .contacts .container .contacts-form .form-textarea {
   margin-bottom: 20px;
-  padding: 5px 20px;
+  padding: 3px 20px;
   border: 2px solid #bdae82;
   background-color: transparent;
   font-size: 20px;
@@ -350,6 +356,8 @@ li {
 .contacts .container .contacts-form .form-textarea {
   line-height: 30px;
   height: 100px;
+  padding-top: 5px;
+  margin-bottom: 30px;
   resize: none;
 }
 
@@ -365,13 +373,14 @@ li {
   width: 25%;
 }
 .footer-content .copyright-year {
-  margin-left: 20px;
+  margin-left: 15px;
 }
 .footer-content .copyright-github {
-  margin-left: 20px;
+  margin-left: 15px;
 }
 .footer-content .social-items {
   width: 25%;
+  height: 32px;
   display: flex;
 }
 .footer-content .social-items .social-item {

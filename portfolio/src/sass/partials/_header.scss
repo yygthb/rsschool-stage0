@@ -37,8 +37,9 @@
     }
 
     .lang {
-      margin-left: 30px;
+      margin-left: 40px;
       font-size: 20px;
+      font-weight: 700;
 
       .lang-input {
         display: none;
@@ -55,6 +56,10 @@
         &:hover {
           color: $color-primary;
         }
+      }
+
+      .lang-divider {
+        margin: 0 5px;
       }
     }
   }
