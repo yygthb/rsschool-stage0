@@ -20,7 +20,8 @@
         color: $color-primary;
       }
 
-      .form-input {
+      .form-input,
+      .form-textarea {
         margin-bottom: 20px;
         padding: 5px 20px;
         border: 2px solid $color-primary;
@@ -36,11 +37,12 @@
         &:focus {
           outline: 1px solid transparent;
         }
+      }
 
-        &.form-textarea {
-          height: 100px;
-          resize: none;
-        }
+      .form-textarea {
+        line-height: 30px;
+        height: 100px;
+        resize: none;
       }
     }
   }

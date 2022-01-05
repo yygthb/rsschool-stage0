@@ -323,7 +323,8 @@ li {
   line-height: 80px;
   color: #bdae82;
 }
-.contacts .container .contacts-form .form-input {
+.contacts .container .contacts-form .form-input,
+.contacts .container .contacts-form .form-textarea {
   margin-bottom: 20px;
   padding: 5px 20px;
   border: 2px solid #bdae82;
@@ -332,13 +333,16 @@ li {
   line-height: 40px;
   color: #bdae82;
 }
-.contacts .container .contacts-form .form-input::placeholder {
+.contacts .container .contacts-form .form-input::placeholder,
+.contacts .container .contacts-form .form-textarea::placeholder {
   color: #bdae82;
 }
-.contacts .container .contacts-form .form-input:focus {
+.contacts .container .contacts-form .form-input:focus,
+.contacts .container .contacts-form .form-textarea:focus {
   outline: 1px solid transparent;
 }
-.contacts .container .contacts-form .form-input.form-textarea {
+.contacts .container .contacts-form .form-textarea {
+  line-height: 30px;
   height: 100px;
   resize: none;
 }
