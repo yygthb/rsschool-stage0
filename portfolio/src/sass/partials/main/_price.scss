@@ -1,0 +1,41 @@
+.price {
+  margin-bottom: 100px;
+
+  &-cards {
+    display: flex;
+    gap: 25px;
+
+    .price-card {
+      flex-basis: 0;
+      flex-grow: 1;
+      padding: 43px;
+      border: 3px solid $color-primary;
+      text-align: center;
+
+      .price-title {
+        margin-bottom: 20px;
+        font-size: 28px;
+        line-height: 56px;
+        @include fontMerri;
+        text-transform: capitalize;
+      }
+
+      .price-value {
+        margin-bottom: 20px;
+        font-size: 24px;
+        line-height: 48px;
+        @include fontMerri;
+        color: $color-primary;
+      }
+
+      .price-services__list {
+        margin-bottom: 40px;
+
+        .price-services__item {
+          font-size: 18px;
+          line-height: 36px;
+        }
+      }
+    }
+  }
+}

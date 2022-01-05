@@ -265,3 +265,39 @@ li {
 .video-container .play-button:hover {
   fill: #bdae82;
 }
+
+.price {
+  margin-bottom: 100px;
+}
+.price-cards {
+  display: flex;
+  gap: 25px;
+}
+.price-cards .price-card {
+  flex-basis: 0;
+  flex-grow: 1;
+  padding: 43px;
+  border: 3px solid #bdae82;
+  text-align: center;
+}
+.price-cards .price-card .price-title {
+  margin-bottom: 20px;
+  font-size: 28px;
+  line-height: 56px;
+  font-family: "Merriweather", serif;
+  text-transform: capitalize;
+}
+.price-cards .price-card .price-value {
+  margin-bottom: 20px;
+  font-size: 24px;
+  line-height: 48px;
+  font-family: "Merriweather", serif;
+  color: #bdae82;
+}
+.price-cards .price-card .price-services__list {
+  margin-bottom: 40px;
+}
+.price-cards .price-card .price-services__list .price-services__item {
+  font-size: 18px;
+  line-height: 36px;
+}
