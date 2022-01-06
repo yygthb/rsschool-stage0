@@ -117,10 +117,16 @@ li {
 .button:hover {
   color: #fff;
 }
+.button:active {
+  background-color: #b39d5d;
+}
 .button-inactive {
   background-color: transparent;
   border: 2px solid #bdae82;
   color: #bdae82;
+}
+.button-inactive:active {
+  background-color: rgba(189, 174, 130, 0.2);
 }
 
 .header .header-container {

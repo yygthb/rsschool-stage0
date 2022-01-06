@@ -47,9 +47,17 @@
     color: $color-white;
   }
 
+  &:active {
+    background-color: $color-primary-active;
+  }
+
   &-inactive {
     background-color: transparent;
     border: 2px solid $color-primary;
     color: $color-primary;
+
+    &:active {
+      background-color: rgba($color-primary, 0.2);
+    }
   }
 }
