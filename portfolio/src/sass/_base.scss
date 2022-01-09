@@ -5,6 +5,10 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   @include fontInter;
   font-size: 20px;
