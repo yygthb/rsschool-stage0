@@ -1,0 +1,15 @@
+.board {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+
+  .card {
+    padding: 10px;
+    height: 120px;
+    width: 90px;
+    border-radius: 10px;
+    background-color: $color-grey;
+    cursor: pointer;
+  }
+}
