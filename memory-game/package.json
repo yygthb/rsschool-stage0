@@ -1,0 +1,19 @@
+{
+  "name": "memory-game",
+  "version": "1.0.0",
+  "description": "browser memory game",
+  "main": "index.js",
+  "scripts": {
+    "build": "sass --style=compressed --no-source-map src/sass/main.scss styles/style.css",
+    "watch": "sass --style=compressed --no-source-map --watch src/sass/main.scss styles/style.css"
+  },
+  "keywords": [
+    "WEB",
+    "JS"
+  ],
+  "author": "yura.ya.dev@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.47.0"
+  }
+}
