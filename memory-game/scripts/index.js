@@ -7,16 +7,20 @@ const hours = timerSection.querySelector('.hours');
 const minutes = timerSection.querySelector('.minutes');
 const seconds = timerSection.querySelector('.seconds');
 
-const palette = {
-  0: 'red',
-  1: 'orange',
-  2: 'yellow',
-  3: 'green',
-  4: 'blue',
-  5: 'purple',
+const images = {
+  0: `url('../assets/img/veg/0.png')`,
+  1: `url('../assets/img/veg/1.png')`,
+  2: `url('../assets/img/veg/2.png')`,
+  3: `url('../assets/img/veg/3.png')`,
+  4: `url('../assets/img/veg/4.png')`,
+  5: `url('../assets/img/veg/5.png')`,
+  6: `url('../assets/img/veg/6.png')`,
+  7: `url('../assets/img/veg/7.png')`,
+  8: `url('../assets/img/veg/8.png')`,
+  9: `url('../assets/img/veg/9.png')`,
 };
-const paletteLength = Object.keys(palette).length;
-const maxCards = 10;
+const imagesLength = Object.keys(images).length;
+const maxCards = 20;
 let control = {
   timer: 0,
   isPlaying: false,
@@ -52,10 +56,10 @@ function startGame() {
 
   // -----------------------------------------------------------
   // update cards color
-  for (let i = 0; i < maxCards / 2; i++) {
-    const color = getRandomColor();
-    colorRandomCard(color);
-    colorRandomCard(color);
+  for (let i = 0; i < Math.ceil(maxCards / 2); i++) {
+    const bg = getRandomImage();
+    coverRandomCard(bg);
+    coverRandomCard(bg);
   }
 
   // -----------------------------------------------------------
@@ -79,8 +83,8 @@ function boardGameClick(e) {
       control.clickedPair.push(target);
       // fix similar cards
       if (
-        control.clickedPair[0].style.backgroundColor ===
-        control.clickedPair[1].style.backgroundColor
+        control.clickedPair[0].style.backgroundImage ===
+        control.clickedPair[1].style.backgroundImage
       ) {
         control.clickedPair.forEach((card) => {
           card.classList.add('fixed');
@@ -125,22 +129,22 @@ function createCard(name) {
   return card;
 }
 
-function colorRandomCard(color) {
+function coverRandomCard(bg) {
   let item = getRandomNumber(0, maxCards - 1);
   while (control.cardsInGame.includes(item)) {
     item = getRandomNumber(0, maxCards - 1);
   }
   control.cardsInGame.push(item);
-  cards[item].style.backgroundColor = color;
+  cards[item].style.backgroundImage = bg;
 }
 
 function getRandomNumber(min, max) {
   return Math.round(Math.random() * (max - min) + min);
 }
 
-function getRandomColor() {
-  const key = Math.floor(Math.random() * paletteLength);
-  return palette[key];
+function getRandomImage() {
+  const key = Math.floor(Math.random() * imagesLength);
+  return images[key];
 }
 
 // timer

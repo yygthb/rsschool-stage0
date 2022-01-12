@@ -17,8 +17,10 @@
     height: 120px;
     width: 90px;
     border-radius: 10px;
-    background-color: $color-grey;
-    color: #000;
+    background-color: #f1f1f1;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 90%;
     cursor: pointer;
 
     @media (max-width: 600px) {
@@ -31,6 +33,7 @@
 
     &.reversed {
       background-color: $color-grey !important;
+      background-image: none !important;
     }
 
     &.fixed {
