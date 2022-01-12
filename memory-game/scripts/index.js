@@ -1,6 +1,10 @@
 const board = document.querySelector('.game-board');
 const resetButton = document.querySelector('.game-button__reset');
 let cards = [];
+const timerEl = document.querySelector('.game-timer');
+const hours = timerEl.querySelector('.hours');
+const minutes = timerEl.querySelector('.minutes');
+const seconds = timerEl.querySelector('.seconds');
 
 const palette = {
   0: 'red',
@@ -15,6 +19,9 @@ const paletteLength = Object.keys(palette).length;
 let cardsInGame = [];
 let clickCount = 0;
 let clickTargets = [];
+let isPlaying = false;
+let timer = 0;
+let refreshTimer;
 
 startGame();
 resetButton.addEventListener('click', startGame);
@@ -23,10 +30,11 @@ resetButton.addEventListener('click', startGame);
 // set to cards random colors
 
 function startGame() {
-  console.log('start game');
+  resetTimer();
   cardsInGame = [];
   clickCount = 0;
   clickTargets = [];
+  isPlaying = false;
   board.textContent = '';
 
   // -----------------------------------------------------------
@@ -57,6 +65,11 @@ function boardGameClick(e) {
   const target = e.target;
 
   if (target.matches('.card.reversed')) {
+    if (!isPlaying) {
+      startTimer();
+    }
+
+    isPlaying = true;
     clickCount++;
     target.classList.remove('reversed');
 
@@ -65,6 +78,8 @@ function boardGameClick(e) {
     }
     if (clickCount === 2) {
       clickTargets[1] = target;
+
+      // fix similar cards
       if (
         clickTargets[0].style.backgroundColor ===
         clickTargets[1].style.backgroundColor
@@ -74,8 +89,12 @@ function boardGameClick(e) {
           const count = +card.dataset.count;
           cardsInGame = cardsInGame.filter((item) => item !== count);
         });
+        if (cardsInGame.length === 0) {
+          stopTimer();
+        }
         clickCount = 0;
       } else {
+        // reverse choosed cards in 0.5s
         setTimeout(() => {
           clickTargets.forEach((card) => {
             if (!card.classList.contains('fixed')) {
@@ -115,4 +134,35 @@ function getRandomNumber(min, max) {
 function getRandomColor() {
   const key = Math.floor(Math.random() * paletteLength);
   return palette[key];
+}
+
+// timer
+
+function startTimer() {
+  refreshTimer = setInterval(() => {
+    timer++;
+    updateTimer();
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(refreshTimer);
+}
+
+function resetTimer() {
+  timer = 0;
+  clearInterval(refreshTimer);
+  hours.textContent = '0';
+  minutes.textContent = '00';
+  seconds.textContent = '00';
+}
+
+function updateTimer() {
+  const h = Math.floor(timer / 3600);
+  const m = Math.floor((timer - h * 3600) / 60);
+  const s = timer - h * 3600 - m * 60;
+
+  hours.textContent = h;
+  minutes.textContent = `${Math.floor(m / 10)}${Math.floor(m % 10)}`;
+  seconds.textContent = `${Math.floor(s / 10)}${Math.floor(s % 10)}`;
 }
