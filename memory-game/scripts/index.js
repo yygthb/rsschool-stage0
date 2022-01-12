@@ -1,10 +1,11 @@
 const board = document.querySelector('.game-board');
 const resetButton = document.querySelector('.game-button__reset');
 let cards = [];
-const timerEl = document.querySelector('.game-timer');
-const hours = timerEl.querySelector('.hours');
-const minutes = timerEl.querySelector('.minutes');
-const seconds = timerEl.querySelector('.seconds');
+const timerSection = document.querySelector('.game-timer');
+const title = timerSection.querySelector('.game-title');
+const hours = timerSection.querySelector('.hours');
+const minutes = timerSection.querySelector('.minutes');
+const seconds = timerSection.querySelector('.seconds');
 
 const palette = {
   0: 'red',
@@ -14,32 +15,33 @@ const palette = {
   4: 'blue',
   5: 'purple',
 };
-const maxCards = 20 - 1; // start = 0
 const paletteLength = Object.keys(palette).length;
-let cardsInGame = [];
-let clickCount = 0;
-let clickTargets = [];
-let isPlaying = false;
-let timer = 0;
+const maxCards = 10;
+let control = {
+  timer: 0,
+  isPlaying: false,
+  cardsInGame: [],
+  clickedPair: [],
+};
 let refreshTimer;
 
 startGame();
 resetButton.addEventListener('click', startGame);
 
-// -----------------------------------------------------------
-// set to cards random colors
-
 function startGame() {
-  resetTimer();
-  cardsInGame = [];
-  clickCount = 0;
-  clickTargets = [];
-  isPlaying = false;
+  title.textContent = 'Timer';
+  timerSection.classList.remove('finished');
   board.textContent = '';
+  control = {
+    isPlaying: false,
+    cardsInGame: [],
+    clickedPair: [],
+  };
+  resetTimer();
 
   // -----------------------------------------------------------
   // insert cards in game board
-  for (let i = 0; i <= maxCards; i++) {
+  for (let i = 0; i < maxCards; i++) {
     const card = createCard(i);
     board.append(card);
   }
@@ -50,7 +52,7 @@ function startGame() {
 
   // -----------------------------------------------------------
   // update cards color
-  for (let i = 0; i <= maxCards / 2; i++) {
+  for (let i = 0; i < maxCards / 2; i++) {
     const color = getRandomColor();
     colorRandomCard(color);
     colorRandomCard(color);
@@ -65,65 +67,70 @@ function boardGameClick(e) {
   const target = e.target;
 
   if (target.matches('.card.reversed')) {
-    if (!isPlaying) {
+    if (!control.isPlaying) {
       startTimer();
     }
-
-    isPlaying = true;
-    clickCount++;
+    control.isPlaying = true;
     target.classList.remove('reversed');
 
-    if (clickCount === 1) {
-      clickTargets[0] = target;
-    }
-    if (clickCount === 2) {
-      clickTargets[1] = target;
-
+    if (control.clickedPair.length === 0) {
+      control.clickedPair.push(target);
+    } else if (control.clickedPair.length === 1) {
+      control.clickedPair.push(target);
       // fix similar cards
       if (
-        clickTargets[0].style.backgroundColor ===
-        clickTargets[1].style.backgroundColor
+        control.clickedPair[0].style.backgroundColor ===
+        control.clickedPair[1].style.backgroundColor
       ) {
-        clickTargets.forEach((card) => {
+        control.clickedPair.forEach((card) => {
           card.classList.add('fixed');
           const count = +card.dataset.count;
-          cardsInGame = cardsInGame.filter((item) => item !== count);
+          control.cardsInGame = control.cardsInGame.filter(
+            (item) => item !== count
+          );
         });
-        if (cardsInGame.length === 0) {
-          stopTimer();
+        if (control.cardsInGame.length === 0) {
+          finishGame();
         }
-        clickCount = 0;
+        control.clickedPair = [];
       } else {
-        // reverse choosed cards in 0.5s
+        // reverse wrong cards in 0.5s
+        board.classList.add('disabled');
         setTimeout(() => {
-          clickTargets.forEach((card) => {
+          control.clickedPair.forEach((card) => {
             if (!card.classList.contains('fixed')) {
               card.classList.add('reversed');
             }
           });
-          clickCount = 0;
+          control.clickedPair = [];
+          board.classList.remove('disabled');
         }, 500);
       }
     }
   }
 }
 
+function finishGame() {
+  timerSection.classList.add('finished');
+  title.textContent = 'Result';
+  stopTimer();
+}
+
 function createCard(name) {
   const card = document.createElement('div');
   card.classList.add('card');
   card.classList.add('reversed');
-  card.textContent = name + 1;
   card.dataset.count = name;
 
   return card;
 }
 
 function colorRandomCard(color) {
-  let item = getRandomNumber(0, maxCards);
-  while (cardsInGame.includes(item)) {
-    item = getRandomNumber(0, maxCards);
+  let item = getRandomNumber(0, maxCards - 1);
+  while (control.cardsInGame.includes(item)) {
+    item = getRandomNumber(0, maxCards - 1);
   }
-  cardsInGame.push(item);
+  control.cardsInGame.push(item);
   cards[item].style.backgroundColor = color;
 }
 
@@ -137,10 +144,9 @@ function getRandomColor() {
 }
 
 // timer
-
 function startTimer() {
   refreshTimer = setInterval(() => {
-    timer++;
+    control.timer++;
     updateTimer();
   }, 1000);
 }
@@ -150,7 +156,7 @@ function stopTimer() {
 }
 
 function resetTimer() {
-  timer = 0;
+  control.timer = 0;
   clearInterval(refreshTimer);
   hours.textContent = '0';
   minutes.textContent = '00';
@@ -158,9 +164,10 @@ function resetTimer() {
 }
 
 function updateTimer() {
-  const h = Math.floor(timer / 3600);
-  const m = Math.floor((timer - h * 3600) / 60);
-  const s = timer - h * 3600 - m * 60;
+  const t = control.timer;
+  const h = Math.floor(t / 3600);
+  const m = Math.floor((t - h * 3600) / 60);
+  const s = t - h * 3600 - m * 60;
 
   hours.textContent = h;
   minutes.textContent = `${Math.floor(m / 10)}${Math.floor(m % 10)}`;
