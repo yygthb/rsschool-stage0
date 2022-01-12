@@ -43,6 +43,7 @@ let control = {
   timer: 0,
   isPlaying: false,
   cardsInGame: [],
+  imageInGame: [],
   clickedPair: [],
 };
 let refreshTimer;
@@ -75,6 +76,7 @@ function startGame() {
   control = {
     isPlaying: false,
     cardsInGame: [],
+    imageInGame: [],
     clickedPair: [],
   };
   resetTimer();
@@ -179,7 +181,11 @@ function getRandomNumber(min, max) {
 }
 
 function getRandomImage(images) {
-  const key = Math.floor(Math.random() * imagesLength);
+  let key = Math.floor(Math.random() * imagesLength);
+  while (control.imageInGame.includes(key)) {
+    key = Math.floor(Math.random() * imagesLength);
+  }
+  control.imageInGame.push(key);
   return images[key];
 }
 
