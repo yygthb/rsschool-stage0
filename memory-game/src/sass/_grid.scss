@@ -10,6 +10,10 @@ body {
     line-height: 2.5em;
     font-weight: 700;
     background-color: $color-palette-2;
+
+    @media (max-width: 400px) {
+      font-size: 1.5em;
+    }
   }
 
   .main {
