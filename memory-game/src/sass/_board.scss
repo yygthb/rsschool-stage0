@@ -9,26 +9,25 @@
 
     .level-title {
       padding: 13px 25px;
-      background-color: #fff;
-      color: #000;
+      background-color: $color-palette-2;
+      color: #fff;
 
       &:hover {
-        background-color: #e9e9e9;
+        background-color: rgba($color: $color-palette-2, $alpha: 0.8);
       }
     }
 
     .level-items {
       position: relative;
-      // top: -49px;
       z-index: -1;
 
       .level-item {
         padding: 13px 25px;
-        background-color: #fff;
-        color: #000;
+        background-color: $color-palette-2;
+        color: #fff;
 
         &:hover {
-          background-color: #e9e9e9;
+          background-color: rgba($color: $color-palette-2, $alpha: 0.8);
         }
       }
     }
@@ -37,7 +36,7 @@
       overflow: visible;
 
       .level-title {
-        background-color: #efefef;
+        background-color: rgba($color: $color-palette-2, $alpha: 0.8);
       }
 
       .level-items {
@@ -81,7 +80,7 @@
       height: 120px;
       width: 90px;
       border-radius: 10px;
-      background-color: #f1f1f1;
+      background-color: #fff;
       background-repeat: no-repeat;
       background-position: center;
       background-size: 90%;
@@ -96,7 +95,7 @@
       }
 
       &.reversed {
-        background-color: $color-grey !important;
+        background-color: $color-palette-4 !important;
         background-image: none !important;
       }
 
