@@ -1,4 +1,6 @@
 const board = document.querySelector('.game-board');
+const level = document.querySelector('.level-container');
+const levelTitle = level.querySelector('.level-title');
 const resetButton = document.querySelector('.game-button__reset');
 let cards = [];
 const timerSection = document.querySelector('.game-timer');
@@ -7,19 +9,35 @@ const hours = timerSection.querySelector('.hours');
 const minutes = timerSection.querySelector('.minutes');
 const seconds = timerSection.querySelector('.seconds');
 
+let isMenuOpen = false;
+
 const images = {
-  0: `url('../assets/img/veg/0.png')`,
-  1: `url('../assets/img/veg/1.png')`,
-  2: `url('../assets/img/veg/2.png')`,
-  3: `url('../assets/img/veg/3.png')`,
-  4: `url('../assets/img/veg/4.png')`,
-  5: `url('../assets/img/veg/5.png')`,
-  6: `url('../assets/img/veg/6.png')`,
-  7: `url('../assets/img/veg/7.png')`,
-  8: `url('../assets/img/veg/8.png')`,
-  9: `url('../assets/img/veg/9.png')`,
+  easy: {
+    0: `url('../assets/img/veg/0.png')`,
+    1: `url('../assets/img/veg/1.png')`,
+    2: `url('../assets/img/veg/2.png')`,
+    3: `url('../assets/img/veg/3.png')`,
+    4: `url('../assets/img/veg/4.png')`,
+    5: `url('../assets/img/veg/5.png')`,
+    6: `url('../assets/img/veg/6.png')`,
+    7: `url('../assets/img/veg/7.png')`,
+    8: `url('../assets/img/veg/8.png')`,
+    9: `url('../assets/img/veg/9.png')`,
+  },
+  hard: {
+    0: `url('../assets/img/alph/0.png')`,
+    1: `url('../assets/img/alph/1.png')`,
+    2: `url('../assets/img/alph/2.png')`,
+    3: `url('../assets/img/alph/3.png')`,
+    4: `url('../assets/img/alph/4.png')`,
+    5: `url('../assets/img/alph/5.png')`,
+    6: `url('../assets/img/alph/6.png')`,
+    7: `url('../assets/img/alph/7.png')`,
+    8: `url('../assets/img/alph/8.png')`,
+    9: `url('../assets/img/alph/9.png')`,
+  },
 };
-const imagesLength = Object.keys(images).length;
+const imagesLength = 10;
 const maxCards = 20;
 let control = {
   timer: 0,
@@ -32,7 +50,25 @@ let refreshTimer;
 startGame();
 resetButton.addEventListener('click', startGame);
 
+// game level
+level.addEventListener('click', (e) => {
+  const target = e.target;
+  level.classList.toggle('active');
+
+  if (!isMenuOpen) {
+    isMenuOpen = true;
+    document.addEventListener('click', listenClick);
+  } else {
+    isMenuOpen = false;
+    document.removeEventListener('click', listenClick);
+    levelTitle.textContent = target.textContent;
+    levelTitle.dataset.level = target.dataset.level;
+    startGame();
+  }
+});
+
 function startGame() {
+  const level = levelTitle.dataset.level;
   title.textContent = 'Timer';
   timerSection.classList.remove('finished');
   board.textContent = '';
@@ -57,7 +93,7 @@ function startGame() {
   // -----------------------------------------------------------
   // update cards color
   for (let i = 0; i < Math.ceil(maxCards / 2); i++) {
-    const bg = getRandomImage();
+    const bg = getRandomImage(images[level]);
     coverRandomCard(bg);
     coverRandomCard(bg);
   }
@@ -142,9 +178,17 @@ function getRandomNumber(min, max) {
   return Math.round(Math.random() * (max - min) + min);
 }
 
-function getRandomImage() {
+function getRandomImage(images) {
   const key = Math.floor(Math.random() * imagesLength);
   return images[key];
+}
+
+function listenClick(e) {
+  if (!e.target.dataset.level) {
+    isMenuOpen = false;
+    level.classList.remove('active');
+    document.removeEventListener('click', listenClick);
+  }
 }
 
 // timer

@@ -1,74 +1,123 @@
-.game-board {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  pointer-events: unset;
-
-  @media (max-width: 600px) {
-    gap: 5px;
-    width: 100%;
-  }
-
-  &.disabled {
-    pointer-events: none;
-  }
-
-  .card {
-    height: 120px;
-    width: 90px;
-    border-radius: 10px;
-    background-color: #f1f1f1;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 90%;
+.main-container {
+  .level-container {
+    position: relative;
+    align-self: flex-end;
+    height: 49px;
+    margin-bottom: 50px;
+    overflow: hidden;
     cursor: pointer;
 
-    @media (max-width: 600px) {
-      width: unset;
+    .level-title {
+      padding: 13px 25px;
+      background-color: #fff;
+      color: #000;
+
+      &:hover {
+        background-color: #e9e9e9;
+      }
     }
+
+    .level-items {
+      position: relative;
+      // top: -49px;
+      z-index: -1;
+
+      .level-item {
+        padding: 13px 25px;
+        background-color: #fff;
+        color: #000;
+
+        &:hover {
+          background-color: #e9e9e9;
+        }
+      }
+    }
+
+    &.active {
+      overflow: visible;
+
+      .level-title {
+        background-color: #efefef;
+      }
+
+      .level-items {
+        z-index: 1;
+      }
+    }
+  }
+
+  .game-timer {
+    margin: 10px 0 30px;
+    font-size: 2em;
+    font-weight: 700;
+    color: $color-grey;
+    text-decoration: none;
 
     @media (max-width: 400px) {
-      height: 90px;
+      font-size: 1.5em;
     }
 
-    &.reversed {
-      background-color: $color-grey !important;
-      background-image: none !important;
+    &.finished {
+      text-decoration: underline;
+    }
+  }
+
+  .game-board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    pointer-events: unset;
+
+    @media (max-width: 600px) {
+      gap: 5px;
+      width: 100%;
     }
 
-    &.fixed {
+    &.disabled {
       pointer-events: none;
     }
+
+    .card {
+      height: 120px;
+      width: 90px;
+      border-radius: 10px;
+      background-color: #f1f1f1;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 90%;
+      cursor: pointer;
+
+      @media (max-width: 600px) {
+        width: unset;
+      }
+
+      @media (max-width: 400px) {
+        height: 90px;
+      }
+
+      &.reversed {
+        background-color: $color-grey !important;
+        background-image: none !important;
+      }
+
+      &.fixed {
+        pointer-events: none;
+      }
+    }
   }
-}
 
-.game-timer {
-  margin: 10px 0 30px;
-  font-size: 2em;
-  font-weight: 700;
-  color: $color-grey;
-  text-decoration: none;
+  .game-button__reset {
+    padding: 15px 40px;
+    margin: 50px 0 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    color: #fff;
+    background-color: $color-palette-2;
+    cursor: pointer;
 
-  @media (max-width: 400px) {
-    font-size: 1.5em;
-  }
-
-  &.finished {
-    text-decoration: underline;
-  }
-}
-
-.game-button__reset {
-  padding: 15px 40px;
-  margin: 50px 0 30px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1.2em;
-  color: #fff;
-  background-color: $color-palette-2;
-  cursor: pointer;
-
-  &:hover {
-    background-color: rgba($color-palette-2, 0.9);
+    &:hover {
+      background-color: rgba($color-palette-2, 0.9);
+    }
   }
 }
