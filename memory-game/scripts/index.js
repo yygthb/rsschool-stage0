@@ -8,6 +8,8 @@ const title = timerSection.querySelector('.game-title');
 const hours = timerSection.querySelector('.hours');
 const minutes = timerSection.querySelector('.minutes');
 const seconds = timerSection.querySelector('.seconds');
+const gameResult = document.querySelector('.game-result');
+const resultCount = gameResult.querySelector('.click-count');
 
 let isMenuOpen = false;
 
@@ -42,11 +44,12 @@ const maxCards = 20;
 let control = {
   timer: 0,
   isPlaying: false,
-  cardsInGame: [],
   imageInGame: [],
-  clickedPair: [],
+  gamePairs: {},
+  click: 0,
 };
 let refreshTimer;
+let target1, target2;
 
 startGame();
 resetButton.addEventListener('click', startGame);
@@ -58,10 +61,10 @@ level.addEventListener('click', (e) => {
 
   if (!isMenuOpen) {
     isMenuOpen = true;
-    document.addEventListener('click', listenClick);
+    document.addEventListener('click', listenLevelClick);
   } else {
     isMenuOpen = false;
-    document.removeEventListener('click', listenClick);
+    document.removeEventListener('click', listenLevelClick);
     levelTitle.textContent = target.textContent;
     levelTitle.dataset.level = target.dataset.level;
     startGame();
@@ -70,110 +73,134 @@ level.addEventListener('click', (e) => {
 
 function startGame() {
   const level = levelTitle.dataset.level;
-  title.textContent = 'Timer';
-  timerSection.classList.remove('finished');
+  gameResult.classList.remove('finished');
   board.textContent = '';
   control = {
     isPlaying: false,
-    cardsInGame: [],
     imageInGame: [],
-    clickedPair: [],
+    gamePairs: {},
+    click: 0,
   };
   resetTimer();
+  resultCount.textContent = control.click;
 
-  // -----------------------------------------------------------
   // insert cards in game board
   for (let i = 0; i < maxCards; i++) {
     const card = createCard(i);
     board.append(card);
   }
 
-  // -----------------------------------------------------------
   // update cards in DOM
-  cards = document.querySelectorAll('.card.reversed');
+  cards = document.querySelectorAll('.card');
 
-  // -----------------------------------------------------------
   // update cards color
   for (let i = 0; i < Math.ceil(maxCards / 2); i++) {
     const bg = getRandomImage(images[level]);
-    coverRandomCard(bg);
-    coverRandomCard(bg);
+    generateRandomPair(bg);
   }
 
-  // -----------------------------------------------------------
   // click on card
   board.addEventListener('click', boardGameClick);
 }
 
 function boardGameClick(e) {
-  const target = e.target;
-
-  if (target.matches('.card.reversed')) {
+  if (e.target.classList.contains('card__face_front')) {
     if (!control.isPlaying) {
       startTimer();
     }
-    control.isPlaying = true;
-    target.classList.remove('reversed');
 
-    if (control.clickedPair.length === 0) {
-      control.clickedPair.push(target);
-    } else if (control.clickedPair.length === 1) {
-      control.clickedPair.push(target);
-      // fix similar cards
-      if (
-        control.clickedPair[0].style.backgroundImage ===
-        control.clickedPair[1].style.backgroundImage
-      ) {
-        control.clickedPair.forEach((card) => {
-          card.classList.add('fixed');
-          const count = +card.dataset.count;
-          control.cardsInGame = control.cardsInGame.filter(
-            (item) => item !== count
-          );
-        });
-        if (control.cardsInGame.length === 0) {
-          finishGame();
-        }
-        control.clickedPair = [];
-      } else {
-        // reverse wrong cards in 0.5s
+    control.isPlaying = true;
+    const target = e.target.closest('.card');
+    target.classList.add('flip');
+    resultCount.textContent = ++control.click;
+
+    if (control.click % 2 === 1) {
+      target1 = target;
+      target2 = null;
+    }
+    if (control.click % 2 === 0) {
+      target2 = target;
+      if (!isPair(target1.dataset.count, target2.dataset.count)) {
         board.classList.add('disabled');
         setTimeout(() => {
-          control.clickedPair.forEach((card) => {
-            if (!card.classList.contains('fixed')) {
-              card.classList.add('reversed');
+          cards.forEach((card) => {
+            if (!card.classList.contains('flip-fixed')) {
+              card.classList.remove('flip');
             }
           });
-          control.clickedPair = [];
+        }, 800);
+        setTimeout(() => {
+          target1 = null;
+          target2 = null;
           board.classList.remove('disabled');
-        }, 500);
+        }, 1000);
+      } else {
+        target1.classList.add('flip-fixed');
+        target2.classList.add('flip-fixed');
+        delete control.gamePairs[target1.dataset.count];
+        delete control.gamePairs[target2.dataset.count];
+        target1 = null;
+        target2 = null;
+
+        if (Object.values(control.gamePairs).length === 0) {
+          finishGame();
+        }
       }
     }
   }
 }
 
 function finishGame() {
-  timerSection.classList.add('finished');
-  title.textContent = 'Result';
+  gameResult.classList.add('finished');
   stopTimer();
 }
 
-function createCard(name) {
-  const card = document.createElement('div');
-  card.classList.add('card');
-  card.classList.add('reversed');
-  card.dataset.count = name;
+function createCard(idx) {
+  const card = createEl('div', 'card');
+  const cardFront = createEl('div', 'card__face', 'card__face_front');
+  const cardBack = createEl('div', 'card__face', 'card__face_back');
+
+  card.append(cardFront);
+  card.append(cardBack);
+  card.dataset.count = idx;
 
   return card;
 }
 
-function coverRandomCard(bg) {
-  let item = getRandomNumber(0, maxCards - 1);
-  while (control.cardsInGame.includes(item)) {
-    item = getRandomNumber(0, maxCards - 1);
+function createEl(tag, ...classNames) {
+  const el = document.createElement(tag);
+  classNames.forEach((className) => el.classList.add(className));
+  return el;
+}
+
+function generateRandomPair(bg) {
+  const index1 = generateUniqueKey();
+  const index2 = generateUniqueKey();
+  control.gamePairs[index1] = index2;
+  control.gamePairs[index2] = index1;
+
+  insertBg(index1, bg);
+  insertBg(index2, bg);
+}
+
+function generateUniqueKey() {
+  let key = getRandomNumber(0, maxCards - 1);
+  while (Object.keys(control.gamePairs).includes(key.toString())) {
+    key = getRandomNumber(0, maxCards - 1);
   }
-  control.cardsInGame.push(item);
-  cards[item].style.backgroundImage = bg;
+  control.gamePairs[key] = null;
+  return key;
+}
+
+function insertBg(idx, bg) {
+  const back = cards[idx].querySelector('.card__face_back');
+  back.style.backgroundImage = bg;
+}
+
+function isPair(key1, key2) {
+  if (control.gamePairs[key1] == key2) {
+    return true;
+  }
 }
 
 function getRandomNumber(min, max) {
@@ -189,11 +216,11 @@ function getRandomImage(images) {
   return images[key];
 }
 
-function listenClick(e) {
+function listenLevelClick(e) {
   if (!e.target.dataset.level) {
     isMenuOpen = false;
     level.classList.remove('active');
-    document.removeEventListener('click', listenClick);
+    document.removeEventListener('click', listenLevelClick);
   }
 }
 

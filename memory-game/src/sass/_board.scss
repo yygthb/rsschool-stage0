@@ -10,7 +10,7 @@
     .level-title {
       padding: 13px 25px;
       background-color: $color-palette-2;
-      color: #fff;
+      transition: background-color 0.3s;
 
       &:hover {
         background-color: rgba($color: $color-palette-2, $alpha: 0.8);
@@ -24,7 +24,7 @@
       .level-item {
         padding: 13px 25px;
         background-color: $color-palette-2;
-        color: #fff;
+        transition: background-color 0.3s;
 
         &:hover {
           background-color: rgba($color: $color-palette-2, $alpha: 0.8);
@@ -45,15 +45,17 @@
     }
   }
 
-  .game-timer {
-    margin: 10px 0 30px;
-    font-size: 2em;
+  .game-timer,
+  .game-result {
+    margin: 5px 0;
+    align-self: flex-start;
+    font-size: 1.7em;
     font-weight: 700;
     color: $color-grey;
     text-decoration: none;
 
     @media (max-width: 400px) {
-      font-size: 1.5em;
+      font-size: 1.4em;
     }
 
     &.finished {
@@ -62,6 +64,7 @@
   }
 
   .game-board {
+    margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
@@ -77,13 +80,12 @@
     }
 
     .card {
+      position: relative;
       height: 120px;
       width: 90px;
       border-radius: 10px;
-      background-color: #fff;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 90%;
+      transition: transform 1s;
+      transform-style: preserve-3d;
       cursor: pointer;
 
       @media (max-width: 600px) {
@@ -94,13 +96,34 @@
         height: 90px;
       }
 
-      &.reversed {
-        background-color: $color-palette-4 !important;
-        background-image: none !important;
+      &.flip {
+        transform: rotateY(180deg);
       }
 
-      &.fixed {
-        pointer-events: none;
+      .card__face {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        border-radius: 10px;
+        backface-visibility: hidden;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 90%;
+
+        &.card__face_front {
+          background-color: $color-palette-4;
+          background-image: url('../assets/img/card-default.png');
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: $color-palette-4-hover;
+          }
+        }
+
+        &.card__face_back {
+          background-color: #fff;
+          transform: rotateY(180deg);
+        }
       }
     }
   }
@@ -114,6 +137,7 @@
     color: #fff;
     background-color: $color-palette-2;
     cursor: pointer;
+    transition: background-color 0.3s;
 
     &:hover {
       background-color: rgba($color-palette-2, 0.9);
