@@ -57,6 +57,7 @@ let control = {
   imageInGame: [],
   gamePairs: {},
   click: 0,
+  level: '',
 };
 let refreshTimer;
 let target1, target2;
@@ -82,7 +83,6 @@ level.addEventListener('click', (e) => {
 });
 
 function startGame() {
-  const level = levelTitle.dataset.level;
   gameResult.classList.remove('finished');
   board.textContent = '';
   control = {
@@ -90,6 +90,7 @@ function startGame() {
     imageInGame: [],
     gamePairs: {},
     click: 0,
+    level: levelTitle.dataset.level,
   };
   resetTimer();
   resultCount.textContent = control.click;
@@ -105,7 +106,7 @@ function startGame() {
 
   // update cards color
   for (let i = 0; i < Math.ceil(maxCards / 2); i++) {
-    const bg = getRandomImage(images[level]);
+    const bg = getRandomImage(images[control.level]);
     generateRandomPair(bg);
   }
 
@@ -162,7 +163,8 @@ function boardGameClick(e) {
 
 function finishGame() {
   gameResult.classList.add('finished');
-  stopTimer();
+  saveResult(control.click, control.timer, control.level);
+  clearInterval(refreshTimer);
 }
 
 function createCard(idx) {
@@ -238,12 +240,12 @@ function listenLevelClick(e) {
 function startTimer() {
   refreshTimer = setInterval(() => {
     control.timer++;
-    updateTimer();
-  }, 1000);
-}
 
-function stopTimer() {
-  clearInterval(refreshTimer);
+    const [h, m, s] = convertTimer(control.timer);
+    hours.textContent = h;
+    minutes.textContent = m;
+    seconds.textContent = s;
+  }, 1000);
 }
 
 function resetTimer() {
@@ -254,13 +256,36 @@ function resetTimer() {
   seconds.textContent = '00';
 }
 
-function updateTimer() {
-  const t = control.timer;
+function convertTimer(timer) {
+  const t = timer;
   const h = Math.floor(t / 3600);
   const m = Math.floor((t - h * 3600) / 60);
   const s = t - h * 3600 - m * 60;
 
-  hours.textContent = h;
-  minutes.textContent = `${Math.floor(m / 10)}${Math.floor(m % 10)}`;
-  seconds.textContent = `${Math.floor(s / 10)}${Math.floor(s % 10)}`;
+  const _m = `${Math.floor(m / 10)}${Math.floor(m % 10)}`;
+  const _s = `${Math.floor(s / 10)}${Math.floor(s % 10)}`;
+
+  return [h, _m, _s];
+}
+
+// save to storage
+function saveResult(c, t, l) {
+  const storage = JSON.parse(localStorage.getItem(`memoryGame_${l}`)) || [];
+  storage.push([c, t]);
+  const sortedStorage = storage.sort((a, b) => {
+    if (a[0] > b[0]) {
+      return 1;
+    } else if (a[0] == b[0] && a[1] > b[1]) {
+      return 1;
+    }
+    return -1;
+  });
+
+  // const [h, m, s] = convertTimer(t);
+  // console.log(`${c} clicks (in ${h}:${m}:${s})`);
+
+  localStorage.setItem(
+    `memoryGame_${l}`,
+    JSON.stringify(sortedStorage.slice(0, 10))
+  );
 }
