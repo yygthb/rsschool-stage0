@@ -66,9 +66,13 @@
   .game-board {
     margin-top: 20px;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 7px;
     pointer-events: unset;
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(5, 1fr);
+    }
 
     @media (max-width: 600px) {
       gap: 5px;
