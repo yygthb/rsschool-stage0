@@ -1,11 +1,16 @@
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   font-size: 20px;
   font-family: 'Roboto', sans-serif;
   background-color: $color-grey;
+
+  &.lock {
+    overflow-y: hidden;
+  }
 }
 
 .container {

@@ -36,13 +36,14 @@
           </div>
           <p class="game-timer">
             <span class="game-title">Timer</span>:
-            <span class="hours">0</span>:<span class="minutes">00</span
+            <span class="minutes">00</span
             ><!--
             -->:<span class="seconds">00</span>
           </p>
           <p class="game-result">Clicks: <span class="click-count">0</span></p>
           <div class="game-board"></div>
           <button class="game-button__reset">Reset</button>
+          <button class="game-button__show-results">top results</button>
         </div>
       </div>
     </main>
@@ -68,6 +69,19 @@
         </div>
       </div>
     </footer>
+
+    <div class="overlay">
+      <div class="modal-results">
+        <h3 class="results-title">Top Results:</h3>
+        <div class="results-content">
+          <ul class="results-list"></ul>
+        </div>
+        <div class="modal-close">
+          <span class="line"></span>
+          <span class="line"></span>
+        </div>
+      </div>
+    </div>
 
     <script src="./scripts/index.js"></script>
   </body>

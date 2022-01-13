@@ -1,17 +1,23 @@
+const body = document.querySelector('body');
 const board = document.querySelector('.game-board');
 const level = document.querySelector('.level-container');
 const levelTitle = level.querySelector('.level-title');
 const resetButton = document.querySelector('.game-button__reset');
-let cards = [];
+// timer
 const timerSection = document.querySelector('.game-timer');
 const title = timerSection.querySelector('.game-title');
-const hours = timerSection.querySelector('.hours');
 const minutes = timerSection.querySelector('.minutes');
 const seconds = timerSection.querySelector('.seconds');
+// result
 const gameResult = document.querySelector('.game-result');
 const resultCount = gameResult.querySelector('.click-count');
+const resultButton = document.querySelector('.game-button__show-results');
+const modal = document.querySelector('.overlay');
+const resultList = document.querySelector('.results-list');
 
+let cards = getStorage(levelTitle.dataset.level);
 let isMenuOpen = false;
+let storage = [];
 
 const images = {
   easy: {
@@ -241,8 +247,7 @@ function startTimer() {
   refreshTimer = setInterval(() => {
     control.timer++;
 
-    const [h, m, s] = convertTimer(control.timer);
-    hours.textContent = h;
+    const [m, s] = convertTimer(control.timer);
     minutes.textContent = m;
     seconds.textContent = s;
   }, 1000);
@@ -251,26 +256,23 @@ function startTimer() {
 function resetTimer() {
   control.timer = 0;
   clearInterval(refreshTimer);
-  hours.textContent = '0';
   minutes.textContent = '00';
   seconds.textContent = '00';
 }
 
 function convertTimer(timer) {
-  const t = timer;
-  const h = Math.floor(t / 3600);
-  const m = Math.floor((t - h * 3600) / 60);
-  const s = t - h * 3600 - m * 60;
+  const m = Math.floor(timer / 60);
+  const s = timer - m * 60;
 
   const _m = `${Math.floor(m / 10)}${Math.floor(m % 10)}`;
   const _s = `${Math.floor(s / 10)}${Math.floor(s % 10)}`;
 
-  return [h, _m, _s];
+  return [_m, _s];
 }
 
 // save to storage
 function saveResult(c, t, l) {
-  const storage = JSON.parse(localStorage.getItem(`memoryGame_${l}`)) || [];
+  storage = getStorage(l);
   storage.push([c, t]);
   const sortedStorage = storage.sort((a, b) => {
     if (a[0] > b[0]) {
@@ -281,11 +283,48 @@ function saveResult(c, t, l) {
     return -1;
   });
 
-  // const [h, m, s] = convertTimer(t);
-  // console.log(`${c} clicks (in ${h}:${m}:${s})`);
-
   localStorage.setItem(
     `memoryGame_${l}`,
     JSON.stringify(sortedStorage.slice(0, 10))
   );
+}
+
+// modal
+resultButton.addEventListener('click', () => {
+  storage = getStorage(levelTitle.dataset.level);
+  openModal();
+});
+
+function getStorage(level) {
+  return JSON.parse(localStorage.getItem(`memoryGame_${level}`)) || [];
+}
+
+function openModal() {
+  body.classList.add('lock');
+  modal.classList.add('open');
+  document.addEventListener('click', closeModal);
+  resultList.textContent = '';
+
+  for (let i = 1; i <= storage.length; i++) {
+    const item = createEl('li', 'results-item');
+    const [m, s] = convertTimer(storage[i - 1][1]);
+    item.insertAdjacentHTML(
+      'afterbegin',
+      `<span>${i}: </span>${storage[i - 1][0]} clicks (in ${m}m ${s}s)`
+    );
+    resultList.append(item);
+  }
+}
+
+function closeModal(e) {
+  e.stopPropagation();
+
+  if (
+    e.target.classList.contains('overlay') ||
+    e.target.closest('.modal-close')
+  ) {
+    modal.classList.remove('open');
+    document.removeEventListener('click', closeModal);
+    body.classList.remove('lock');
+  }
 }
