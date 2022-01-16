@@ -16,6 +16,10 @@ body {
   font-weight: 400;
   background-color: $color-black;
   color: $color-white;
+
+  &.lock {
+    overflow-y: hidden;
+  }
 }
 
 h1,
@@ -33,7 +37,7 @@ h3 {
 a {
   color: inherit;
   text-decoration: none;
-  transition: color $hover-animation-speed ease;
+  transition: color $animation-speed ease;
 
   &:hover {
     color: $color-primary;

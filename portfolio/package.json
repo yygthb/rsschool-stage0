@@ -6,8 +6,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --mode development",
-    "watch": "webpack --mode development --watch",
-    "start": "sass --no-source-map --watch src/sass/main.scss styles/style.css"
+    "watch": "webpack --mode development --watch"
   },
   "author": "yura.ya.dev@gmail.com",
   "license": "ISC",
@@ -15,8 +14,6 @@
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^10.2.0",
     "css-loader": "^6.5.1",
-    "file-loader": "^6.2.0",
-    "html-loader": "^3.1.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.5.0",
     "sass": "^1.45.2",

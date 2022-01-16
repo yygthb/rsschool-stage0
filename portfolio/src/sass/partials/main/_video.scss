@@ -1,10 +1,27 @@
 .video {
   &-container {
     position: relative;
+    width: 100%;
+    height: auto;
+    display: block;
+    background: url("../assets/img/video.jpg") no-repeat center;
+    background-size: cover;
+
+    @media (max-width: 768px) {
+      width: calc(100% + 40px);
+      background-image: url("../assets/img/video-mobile.jpg");
+    }
 
     .video-player {
-      display: block;
+      opacity: 0;
       width: 100%;
+      height: auto;
+      display: block;
+      content: url("../assets/img/video.jpg");
+
+      @media (max-width: 768px) {
+        content: url("../assets/img/video-mobile.jpg");
+      }
     }
 
     .play-button {
@@ -17,7 +34,7 @@
       background-color: transparent;
       fill: $color-white;
       cursor: pointer;
-      transition: fill $hover-animation-speed ease;
+      transition: fill $animation-speed ease;
 
       svg {
         width: 130px;
@@ -26,6 +43,14 @@
 
       &:hover {
         fill: $color-primary;
+      }
+    }
+
+    @media (max-width: 768px) {
+      margin: 0 -20px 0 -20px;
+
+      .play-button {
+        transform: translate(-50%, -50%) scale(0.5);
       }
     }
   }

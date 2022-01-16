@@ -7,6 +7,15 @@
   background-color: $color-black;
   color: $color-primary;
 
+  @media (max-width: 768px) {
+    margin: 80px auto 50px;
+  }
+
+  @media (max-width: 550px) {
+    width: 90%;
+    margin: 60px auto 30px;
+  }
+
   &::before {
     position: absolute;
     top: calc(50% - 1px);
@@ -26,6 +35,10 @@
     line-height: 80px;
     text-transform: capitalize;
     background-color: $color-black;
+
+    @media (max-width: 768px) {
+      font-size: 32px;
+    }
   }
 }
 
@@ -40,7 +53,7 @@
   color: $color-black;
   border: 2px solid #bdae82;
   cursor: pointer;
-  transition: color $hover-animation-speed ease;
+  transition: color $animation-speed ease;
 
   &:hover {
     color: $color-white;
@@ -58,5 +71,21 @@
     &:active {
       background-color: rgba($color-primary, 0.2);
     }
+  }
+}
+
+.overlay {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba($color-black, 0);
+  transition: background-color 0.5s ease, z-index 1s ease;
+
+  &.open {
+    z-index: 10;
+    background-color: rgba($color-black, 0.5);
   }
 }
