@@ -5,8 +5,6 @@ const menu = document.querySelector('.nav');
 const overlay = document.querySelector('.overlay');
 const closeMenuEl = document.querySelectorAll('[data-close]');
 
-console.log('overlay: ', overlay);
-
 burger.addEventListener('click', () => {
   burger.classList.toggle('open');
   overlay.classList.toggle('open');

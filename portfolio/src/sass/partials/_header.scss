@@ -20,12 +20,7 @@
         margin-top: 10px;
         fill: $color-white;
         transition: fill $animation-speed ease;
-      }
-
-      &:hover {
-        .logo-icon {
-          fill: $color-primary;
-        }
+        @include hover("fill", $color-primary, $color-white);
       }
     }
 
@@ -136,6 +131,12 @@
       margin-left: 12px;
       display: none;
       cursor: pointer;
+      @include hover(
+        "background-color",
+        $color-primary,
+        $color-white,
+        ".burger-line"
+      );
 
       @media (max-width: 768px) {
         display: flex;

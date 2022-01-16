@@ -54,10 +54,7 @@
   border: 2px solid #bdae82;
   cursor: pointer;
   transition: color $animation-speed ease;
-
-  &:hover {
-    color: $color-white;
-  }
+  @include hover("color", $color-white, $color-black);
 
   &:active {
     background-color: $color-primary-active;
@@ -67,6 +64,7 @@
     background-color: transparent;
     border: 2px solid $color-primary;
     color: $color-primary;
+    @include hover("color", $color-white, $color-primary);
 
     &:active {
       background-color: rgba($color-primary, 0.2);

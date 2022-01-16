@@ -1,0 +1,29 @@
+// reset hover-effect after touch event in mobile
+
+@mixin hover($property, $hover-bg, $default-bg, $child: "") {
+  @if $child {
+    &:hover #{$child} {
+      #{$property}: $hover-bg;
+    }
+    @media (hover: none) {
+      &:hover #{$child} {
+        #{$property}: $default-bg;
+      }
+      &:active #{$child} {
+        #{$property}: $hover-bg;
+      }
+    }
+  } @else {
+    &:hover {
+      #{$property}: $hover-bg;
+    }
+    @media (hover: none) {
+      &:hover {
+        #{$property}: $default-bg;
+      }
+      &:active {
+        #{$property}: $hover-bg;
+      }
+    }
+  }
+}

@@ -70,10 +70,7 @@
           height: 32px;
           fill: $color-white;
           transition: fill $animation-speed ease;
-
-          &:hover {
-            fill: $color-primary;
-          }
+          @include hover("fill", $color-primary, $color-white);
         }
       }
     }

@@ -35,14 +35,11 @@
       fill: $color-white;
       cursor: pointer;
       transition: fill $animation-speed ease;
+      @include hover("fill", $color-primary, $color-white);
 
       svg {
         width: 130px;
         height: 130px;
-      }
-
-      &:hover {
-        fill: $color-primary;
       }
     }
 
