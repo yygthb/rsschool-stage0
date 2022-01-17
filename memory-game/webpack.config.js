@@ -1,0 +1,69 @@
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+module.exports = {
+  mode: 'development',
+  entry: {
+    main: './src/index.js',
+  },
+  output: {
+    filename: '[name].[hash].js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      inject: 'body',
+      minify: {
+        collapseWhitespace: false,
+      },
+    }),
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css',
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'src/assets/img/favicon.ico'),
+          to: path.resolve(__dirname, 'dist/assets/img'),
+        },
+        {
+          from: path.resolve(__dirname, 'src/assets/img/rs.svg'),
+          to: path.resolve(__dirname, 'dist/assets/img'),
+        },
+        {
+          from: path.resolve(__dirname, 'src/assets/img/cards'),
+          to: path.resolve(__dirname, 'dist/assets/img/cards'),
+        },
+      ],
+    }),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.(sa|sc|c)ss$/i,
+        use: [
+          { loader: MiniCssExtractPlugin.loader, options: {} },
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.(jpe?g|png|gif)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/img/[name][ext]',
+        },
+      },
+    ],
+  },
+};

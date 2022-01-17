@@ -1,80 +1,88 @@
 .main-container {
   height: 100%;
 
-  .level-container {
-    position: relative;
-    align-self: flex-end;
-    height: 49px;
-    overflow: hidden;
-    cursor: pointer;
+  .game-info {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
 
-    .level-title {
-      padding: 13px 25px;
-      background-color: $color-palette-2;
-      transition: background-color 0.3s;
-
-      &:hover {
-        background-color: rgba($color: $color-palette-2, $alpha: 0.8);
-      }
-    }
-
-    .level-items {
+    .level-container {
       position: relative;
-      z-index: -1;
+      height: 49px;
+      overflow: hidden;
+      cursor: pointer;
 
-      .level-item {
+      .level-title {
         padding: 13px 25px;
         background-color: $color-palette-2;
         transition: background-color 0.3s;
 
         &:hover {
-          background-color: rgba($color: $color-palette-2, $alpha: 0.8);
+          background-color: $color-palette-2-hover;
         }
       }
-    }
-
-    &.active {
-      overflow: visible;
-
-      .level-title {
-        background-color: rgba($color: $color-palette-2, $alpha: 0.8);
-      }
 
       .level-items {
-        z-index: 1;
-      }
-    }
+        position: relative;
+        z-index: -1;
 
-    @media (max-width: 400px) {
-      margin-bottom: 12px;
-
-      .level-title {
-        padding: 10px 25px;
-      }
-
-      .level-items {
         .level-item {
+          padding: 13px 25px;
+          background-color: $color-palette-2;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: $color-palette-2-hover;
+          }
+        }
+      }
+
+      &.active {
+        overflow: visible;
+
+        .level-title {
+          background-color: $color-palette-2;
+        }
+
+        .level-items {
+          z-index: 1;
+        }
+      }
+
+      @media (max-width: 400px) {
+        margin-bottom: 12px;
+
+        .level-title {
           padding: 10px 25px;
         }
+
+        .level-items {
+          .level-item {
+            padding: 10px 25px;
+          }
+        }
       }
     }
-  }
 
-  .game-timer,
-  .game-result {
-    margin: 5px 0;
-    align-self: flex-start;
-    font-size: 1.7em;
-    font-weight: 700;
-    color: $color-grey;
-    text-decoration: none;
+    .game-statistics {
+      .game-timer,
+      .game-result {
+        margin: 5px 0;
+        align-self: flex-start;
+        font-size: 1.7em;
+        font-weight: 700;
+        color: $color-grey;
+        text-decoration: none;
 
-    @media (max-width: 400px) {
-      font-size: 1.4em;
-    }
+        @media (max-width: 400px) {
+          font-size: 1.4em;
+        }
 
-    &.finished {
-      text-decoration: underline;
+        &.finished {
+          color: $color-palette-2;
+          text-decoration: underline;
+        }
+      }
     }
   }
 
