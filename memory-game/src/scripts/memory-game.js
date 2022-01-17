@@ -97,6 +97,7 @@ function startGame() {
   };
   resetTimer();
   resultCount.textContent = control.click;
+  board.classList.add('disabled');
 
   // insert cards in game board
   for (let i = 0; i < maxCards; i++) {
@@ -112,6 +113,15 @@ function startGame() {
     const bg = getRandomImage(images[control.level]);
     generateRandomPair(bg);
   }
+
+  cards.forEach((card, idx) => {
+    setTimeout(() => {
+      card.classList.add('animated');
+    }, idx * 10);
+  });
+  setTimeout(() => {
+    board.classList.remove('disabled');
+  }, 1000);
 
   // click on card
   board.addEventListener('click', boardGameClick);

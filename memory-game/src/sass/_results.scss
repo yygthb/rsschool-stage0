@@ -10,7 +10,7 @@
   justify-content: center;
   color: $color-grey;
   background-color: transparent;
-  transition: background-color 0.3s ease, z-index 0.3s ease;
+  transition: background-color 0.5s ease, z-index 0.5s ease;
 
   .modal-results {
     position: relative;
@@ -19,7 +19,7 @@
     background-color: #fff;
     min-width: 400px;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.5s ease;
 
     @media (max-width: 400px) {
       min-width: unset;
@@ -68,7 +68,7 @@
         height: 3px;
         border-radius: 2px;
         background-color: $color-grey;
-        transition: background-color 0.3s;
+        transition: background-color 0.5s;
 
         &:nth-child(1) {
           transform: translate(0, 20px) rotate(45deg);
