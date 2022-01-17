@@ -58,7 +58,7 @@ let control = {
   timer: 0,
   isPlaying: false,
   imageInGame: [],
-  gamePairs: {},
+  cardPairs: {},
   click: 0,
   level: '',
 };
@@ -91,7 +91,7 @@ function startGame() {
   control = {
     isPlaying: false,
     imageInGame: [],
-    gamePairs: {},
+    cardPairs: {},
     click: 0,
     level: levelTitle.dataset.level,
   };
@@ -151,12 +151,12 @@ function boardGameClick(e) {
       } else {
         target1.classList.add('flip-fixed');
         target2.classList.add('flip-fixed');
-        delete control.gamePairs[target1.dataset.count];
-        delete control.gamePairs[target2.dataset.count];
+        delete control.cardPairs[target1.dataset.count];
+        delete control.cardPairs[target2.dataset.count];
         target1 = null;
         target2 = null;
 
-        if (Object.values(control.gamePairs).length === 0) {
+        if (Object.values(control.cardPairs).length === 0) {
           finishGame();
         }
       }
@@ -185,8 +185,8 @@ function createCard(idx) {
 function generateRandomPair(bg) {
   const index1 = generateUniqueKey();
   const index2 = generateUniqueKey();
-  control.gamePairs[index1] = index2;
-  control.gamePairs[index2] = index1;
+  control.cardPairs[index1] = index2;
+  control.cardPairs[index2] = index1;
 
   insertBg(index1, bg);
   insertBg(index2, bg);
@@ -194,10 +194,10 @@ function generateRandomPair(bg) {
 
 function generateUniqueKey() {
   let key = getRandomNumber(0, maxCards - 1);
-  while (Object.keys(control.gamePairs).includes(key.toString())) {
+  while (Object.keys(control.cardPairs).includes(key.toString())) {
     key = getRandomNumber(0, maxCards - 1);
   }
-  control.gamePairs[key] = null;
+  control.cardPairs[key] = null;
   return key;
 }
 
@@ -207,7 +207,7 @@ function insertBg(idx, bg) {
 }
 
 function isPair(key1, key2) {
-  if (control.gamePairs[key1] == key2) {
+  if (control.cardPairs[key1] == key2) {
     return true;
   }
 }
