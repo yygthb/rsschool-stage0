@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link
+      rel="shortcut icon"
+      href="./assets/img/favicon.ico"
+      type="image/x-icon"
+    />
+    <title>Memory game</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="main.c38d475a1ffa10cfa4e9.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <header class="header">Memory Game</header>
+
+    <main class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="game-info">
+            <div class="game-statistics">
+              <p class="game-timer">
+                <span class="game-title">Timer</span>:
+                <span class="minutes">00</span
+                ><!--
+                -->:<span class="seconds">00</span>
+              </p>
+              <p class="game-result">
+                Clicks: <span class="click-count">0</span>
+              </p>
+            </div>
+            <div class="level-container">
+              <p class="level-title" data-level="easy">Level 1</p>
+              <ul class="level-items">
+                <li class="level-item" data-level="easy">Level 1</li>
+                <li class="level-item" data-level="hard">Level 2</li>
+              </ul>
+            </div>
+          </div>
+          <div class="game-board"></div>
+          <button class="game-button__reset">Reset</button>
+          <button class="game-button__show-results">top results</button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-container">
+          <a href="https://rs.school/js/" class="course-link" target="_blank">
+            <img
+              src="./assets/img/rs.svg"
+              class="school-logo"
+              alt="RS-School icon"
+          /></a>
+          <span class="info"
+            >© 2022 by
+            <a
+              href="https://github.com/yygthb"
+              class="info-link"
+              target="_blank"
+              >Yura Ya</a
+            ></span
+          >
+        </div>
+      </div>
+    </footer>
+
+    <div class="overlay">
+      <div class="modal-results">
+        <h3 class="results-title">Top Results:</h3>
+        <div class="results-content">
+          <ul class="results-list"></ul>
+        </div>
+        <div class="modal-close">
+          <span class="line"></span>
+          <span class="line"></span>
+        </div>
+      </div>
+    </div>
+    <script defer="defer" src="main.c38d475a1ffa10cfa4e9.js"></script>
+    <script defer="defer" src="result.c38d475a1ffa10cfa4e9.js"></script>
+  </body>
+</html>
