@@ -3,6 +3,22 @@
     display: flex;
     gap: 40px;
 
+    @media (max-width: 1100px) {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 36px 44px;
+    }
+
+    @media (max-width: 768px) {
+      gap: 25px 44px;
+      margin-top: -5px;
+      margin-bottom: 105px;
+    }
+
+    @media (max-width: 550px) {
+      margin-bottom: 0;
+    }
+
     .skills-item {
       flex-grow: 1;
       flex-basis: 0;
@@ -11,12 +27,30 @@
       align-items: center;
       padding: 0 20px;
 
+      @media (max-width: 1100px) {
+        flex-basis: 300px;
+        flex-grow: unset;
+        padding: 0 10px 45px;
+      }
+
+      @media (max-width: 550px) {
+        padding: 0 10px 10px;
+      }
+
       &__icon {
         width: 62px;
         height: 50px;
         display: block;
         margin-bottom: 50px;
         fill: $color-primary;
+
+        @media (max-width: 768px) {
+          margin-bottom: 30px;
+        }
+
+        @media (max-width: 550px) {
+          margin-bottom: 10px;
+        }
       }
 
       &__title {
@@ -24,6 +58,10 @@
         font-weight: 700;
         text-align: center;
         flex: 1;
+
+        @media (max-width: 550px) {
+          margin-bottom: 10px;
+        }
       }
 
       &__text {
@@ -31,6 +69,10 @@
         font-size: 18px;
         line-height: 36px;
         text-align: center;
+
+        @media (max-width: 768px) {
+          line-height: 22px;
+        }
       }
 
       &:nth-child(3) {

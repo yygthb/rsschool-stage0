@@ -4,8 +4,20 @@
   height: 700px;
   width: 100%;
 
+  @media (max-width: 768px) {
+    height: 600px;
+  }
+
+  @media (max-width: 550px) {
+    background-position-x: -60px;
+  }
+
   .container {
     padding-top: 60px;
+
+    @media (max-width: 768px) {
+      padding-top: 57px;
+    }
 
     .contacts-form {
       display: flex;
@@ -13,22 +25,39 @@
       width: 450px;
       margin-left: auto;
 
+      @media (max-width: 768px) {
+        margin: 0 auto;
+        text-align: center;
+        align-items: center;
+      }
+
+      @media (max-width: 550px) {
+        width: 100%;
+      }
+
       .form-title {
         margin-bottom: 40px;
         font-size: 40px;
         line-height: 80px;
         color: $color-primary;
+
+        @media (max-width: 768px) {
+          margin-bottom: 36px;
+          font-size: 32px;
+          line-height: 72px;
+        }
       }
 
       .form-input,
       .form-textarea {
+        width: 100%;
         margin-bottom: 20px;
         padding: 3px 20px;
         border: 2px solid $color-primary;
-        background-color: transparent;
         font-size: 20px;
         line-height: 40px;
         color: $color-primary;
+        background-color: rgba($color-black, 0.5);
 
         &::placeholder {
           color: $color-primary;

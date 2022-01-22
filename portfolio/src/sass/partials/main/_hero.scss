@@ -5,6 +5,12 @@
   background: url("../assets/img/hero-bg.jpg") no-repeat center;
   background-size: cover;
 
+  @media (max-width: 768px) {
+    height: 590px;
+    background-position: -5px -30px;
+    background-size: auto 620px;
+  }
+
   .hero-content {
     width: 480px;
     margin-top: 250px;
@@ -13,11 +19,33 @@
     .hero-title {
       margin-bottom: 10px;
       font-size: 60px;
-      line-height: 120px;
+      line-height: 2em;
     }
 
     .hero-info {
       margin-bottom: 25px;
+    }
+
+    @media (max-width: 768px) {
+      width: 400px;
+      margin-top: 168px;
+      margin-left: 60px;
+
+      .hero-title {
+        margin-bottom: 20px;
+        font-size: 32px;
+      }
+
+      .hero-info {
+        margin-bottom: 60px;
+        line-height: 24.2px;
+      }
+    }
+
+    @media (max-width: 550px) {
+      width: 100%;
+      margin: 168px 20px;
+      text-align: center;
     }
   }
 }
