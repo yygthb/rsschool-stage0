@@ -46,6 +46,10 @@
           font-size: 32px;
           line-height: 72px;
         }
+
+        @media (max-width: 400px) {
+          line-height: 48px;
+        }
       }
 
       .form-input,

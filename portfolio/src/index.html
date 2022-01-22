@@ -70,13 +70,21 @@
           <div class="lang">
             <input class="lang-input" type="radio" name="lang" id="en" />
             <label class="lang-label" for="en" title="change language to EN"
-              >en</label
+              >EN</label
             >
             <input class="lang-input" type="radio" name="lang" id="ru" />
             /
             <label class="lang-label" for="ru" title="change language to RU"
-              >ru</label
+              >RU</label
             >
+          </div>
+          <div class="theme-control">
+            <svg class="theme-icon__light">
+              <use xlink:href="./assets/svg/sprite.svg#light"></use>
+            </svg>
+            <svg class="theme-icon__dark">
+              <use xlink:href="./assets/svg/sprite.svg#dark"></use>
+            </svg>
           </div>
           <div class="burger">
             <span class="burger-line"></span>
@@ -88,8 +96,8 @@
     </header>
 
     <main class="main">
-      <div class="container">
-        <section class="hero">
+      <section class="hero">
+        <div class="container hero-container">
           <div class="hero-content">
             <h1 class="hero-title" data-i18n="hero-title">Alexa Rise</h1>
             <p class="hero-info" data-i18n="hero-info">
@@ -98,9 +106,11 @@
             </p>
             <button class="button hero-button" data-i18n="hire">Hire me</button>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="skills" id="skills">
+      <section class="skills" id="skills">
+        <div class="container">
           <div class="title-container">
             <h2 class="section-title" data-i18n="skills">Skills</h2>
           </div>
@@ -150,9 +160,11 @@
               </p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="portfolio" id="portfolio">
+      <section class="portfolio" id="portfolio">
+        <div class="container">
           <div class="title-container">
             <h2 class="section-title" data-i18n="portfolio">Portfolio</h2>
           </div>
@@ -220,9 +232,11 @@
               width="450"
             />
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="video" id="video">
+      <section class="video" id="video">
+        <div class="container">
           <div class="title-container">
             <h2 class="section-title" data-i18n="video">Video</h2>
           </div>
@@ -234,9 +248,11 @@
               </svg>
             </button>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="price" id="price">
+      <section class="price" id="price">
+        <div class="container">
           <div class="title-container">
             <h2 class="section-title" data-i18n="price">price</h2>
           </div>
@@ -353,8 +369,8 @@
               <button class="button" data-i18n="order">Order shooting</button>
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       <section class="contacts" id="contacts">
         <div class="container">
