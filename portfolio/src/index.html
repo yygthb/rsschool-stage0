@@ -240,13 +240,42 @@
           <div class="title-container">
             <h2 class="section-title" data-i18n="video">Video</h2>
           </div>
-          <div class="video-container">
-            <img alt="video-player bg wrapper" class="video-player" />
-            <button class="play-button">
-              <svg>
-                <use xlink:href="./assets/svg/sprite.svg#video-play"></use>
-              </svg>
-            </button>
+          <div class="test">
+            <div class="player">
+              <video
+                class="player__video"
+                src="./assets/video/video.mp4"
+                poster="./assets/video/poster.jpg"
+                muted
+              >
+                >
+              </video>
+              <button class="play-button">
+                <svg>
+                  <use xlink:href="./assets/svg/sprite.svg#video-play"></use>
+                </svg>
+              </button>
+              <div class="player__controls">
+                <button class="player__button">
+                  <svg class="player__button-play">
+                    <use xlink:href="./assets/svg/sprite.svg#play"></use>
+                  </svg>
+                  <svg class="player__button-pause">
+                    <use xlink:href="./assets/svg/sprite.svg#pause"></use>
+                  </svg>
+                </button>
+
+                <div class="player__progress">
+                  <div class="progress__filled"></div>
+                </div>
+
+                <button class="player__button">
+                  <svg class="player__button-volume">
+                    <use xlink:href="./assets/svg/sprite.svg#vol"></use>
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
