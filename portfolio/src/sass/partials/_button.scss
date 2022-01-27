@@ -14,7 +14,7 @@
     position: absolute;
     border-radius: 50%;
     opacity: 0;
-    transition: all 0.3s ease;
+    transition: all 0.5s ease;
   }
 
   @for $i from 1 through 400 {

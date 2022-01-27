@@ -1,5 +1,5 @@
 const radius = 200;
-const particles = 40;
+const particles = 50;
 
 document.querySelectorAll('.button').forEach((particlesBtn) => {
   particlesBtn.addEventListener('click', function (e) {
@@ -26,7 +26,7 @@ document.querySelectorAll('.button').forEach((particlesBtn) => {
 
     setTimeout(() => {
       removeParticles(particlesBtn);
-    }, 280);
+    }, 480);
   });
 });
 
