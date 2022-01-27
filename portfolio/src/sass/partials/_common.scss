@@ -51,7 +51,7 @@
   align-items: flex-start;
   background-color: $color-primary;
   color: $color-black;
-  border: 2px solid #bdae82;
+  border: none;
   cursor: pointer;
   transition: color $animation-speed ease;
   @include hover("color", $color-white, $color-black);
