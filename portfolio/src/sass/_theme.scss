@@ -28,7 +28,7 @@ body.light-theme {
     }
 
     .nav {
-      @media (max-width: 768px) {
+      @media (max-width: 900px) {
         .nav-list {
           background-color: $color-white;
 
@@ -130,9 +130,17 @@ body.light-theme {
     }
   }
 
-  .price .button {
-    @include hover("background-color", $color-black-matte, $color-primary);
-    @include hover("color", $color-white, $color-black);
+  .price {
+    &-card {
+      .price-value {
+        color: $color-black;
+      }
+
+      .button {
+        @include hover("background-color", $color-black-matte, $color-primary);
+        @include hover("color", $color-white, $color-black);
+      }
+    }
   }
 
   .contacts {
