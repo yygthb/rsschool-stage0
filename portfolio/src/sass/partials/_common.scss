@@ -51,7 +51,7 @@
   align-items: flex-start;
   background-color: $color-primary;
   color: $color-black;
-  border: 2px solid #bdae82;
+  border: none;
   cursor: pointer;
   transition: color $animation-speed ease;
   @include hover("color", $color-white, $color-black);
@@ -83,7 +83,7 @@
   transition: background-color 0.5s ease, z-index 1s ease;
 
   &.open {
-    z-index: 10;
+    z-index: 7;
     background-color: rgba($color-black, 0.5);
   }
 }

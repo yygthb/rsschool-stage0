@@ -1,0 +1,34 @@
+@function randomValue($min, $max) {
+  @return random($max) + $min;
+}
+
+.button {
+  position: relative;
+
+  &:active {
+    top: 2px;
+  }
+
+  .particle {
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.5s ease;
+  }
+
+  @for $i from 1 through 400 {
+    .particle:nth-child(#{$i}) {
+      $value: #{randomValue(5, 10)}px;
+      height: $value;
+      width: $value;
+      opacity: 0.75;
+
+      @if ($i % 2 == 0) {
+        background-color: lighten($color-primary, 10%);
+      } @else {
+        border: #{random(2)}px solid lighten($color-primary, 20%);
+      }
+    }
+  }
+}
