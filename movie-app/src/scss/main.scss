@@ -1,7 +1,9 @@
 @import "normalize";
 
 // base
+@import "variables";
 @import "base";
 
 // components
 @import "app";
+@import "components/all";

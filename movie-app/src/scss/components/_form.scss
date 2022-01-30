@@ -1,0 +1,56 @@
+.form {
+  display: flex;
+  width: max-content;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: $color-white;
+
+  .input,
+  .button {
+    border: none;
+  }
+
+  .input {
+    padding: 7px 10px;
+    width: 300px;
+    font-size: 18px;
+    background-color: transparent;
+
+    &::placeholder {
+      font-size: 14px;
+      opacity: 0.75;
+    }
+  }
+
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+
+    & ~ .button {
+      margin-left: 5px;
+    }
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    fill: $color-grey;
+    transition: fill 0.3s ease;
+
+    &:hover {
+      fill: $color-black;
+    }
+  }
+
+  .button-reset {
+    .icon {
+      transform: scale(0.75);
+
+      .svg {
+        transform: scale(0.25);
+      }
+    }
+  }
+}

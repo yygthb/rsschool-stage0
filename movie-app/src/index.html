@@ -4,7 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Movie web app</title>
+    <title>Best Films - top web application</title>
+
+    <link
+      rel="shortcut icon"
+      href="./assets/img/favicon.ico"
+      type="image/x-icon"
+    />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,6 +21,57 @@
   </head>
 
   <body>
-    <h1>MOVIE APP</h1>
+    <div class="wrapper">
+      <header class="header">
+        <div class="container header__container">
+          <a href="./index.html" class="logo">Best films</a>
+          <form class="form">
+            <input
+              type="text"
+              class="input"
+              value="asdfasdfasidgjdfasdfasidgjgaosdhdfasdf"
+              placeholder="search..."
+            />
+            <button class="button button-reset">
+              <svg class="icon">
+                <use
+                  class="svg"
+                  xlink:href="./assets/img/sprite.svg#reset"
+                ></use>
+              </svg>
+            </button>
+            <button class="button">
+              <svg class="icon">
+                <use xlink:href="./assets/img/sprite.svg#search"></use>
+              </svg>
+            </button>
+          </form>
+        </div>
+      </header>
+      <main class="main">
+        <div class="container">MAIN</div>
+      </main>
+      <footer class="footer">
+        <div class="container footer__container">
+          <div class="footer__row">
+            <a href="https://rs.school/js-stage0/" target="_blank"
+              ><img
+                class="footer__rs-logo"
+                src="./assets/img/rs.svg"
+                alt="rs-school logo"
+            /></a>
+            <span class="footer__item">
+              © 2022
+              <a
+                href="https://github.com/yygthb"
+                class="link__text"
+                target="_blank"
+                >yygthb</a
+              >
+            </span>
+          </div>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>

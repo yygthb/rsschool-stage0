@@ -30,14 +30,14 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].[hash].css',
     }),
-    // new CopyPlugin({
-    //   patterns: [
-    //     {
-    //       from: path.resolve(__dirname, 'src/assets/img'),
-    //       to: path.resolve(__dirname, 'dist/assets/img'),
-    //     },
-    //   ],
-    // }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'src/assets/img'),
+          to: path.resolve(__dirname, 'dist/assets/img'),
+        },
+      ],
+    }),
   ],
   module: {
     rules: [

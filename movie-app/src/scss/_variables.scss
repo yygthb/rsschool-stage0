@@ -1,0 +1,13 @@
+$color-white: #fff;
+$color-black: #000;
+$color-grey: #777;
+$color-grey-light: #ddd;
+
+$color: (
+  0: #e33258,
+  1: #170409,
+);
+
+@function color($index) {
+  @return map-get($color, $index);
+}

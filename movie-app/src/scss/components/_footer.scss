@@ -1,0 +1,21 @@
+.footer {
+  font-size: 14px;
+  opacity: 0.8;
+  border-top: 1px solid $color-grey;
+
+  .footer__container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .footer__row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer__rs-logo {
+      display: block;
+      width: 100px;
+    }
+  }
+}
