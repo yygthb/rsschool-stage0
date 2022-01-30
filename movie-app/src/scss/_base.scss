@@ -12,7 +12,7 @@ html {
 body {
   font-family: "Roboto", sans-serif;
   font-size: 20px;
-  line-height: 1em;
+  line-height: 150%;
   font-weight: 400;
   background-color: color(1);
   color: $color-white;
@@ -20,12 +20,6 @@ body {
   &.lock {
     overflow-y: hidden;
   }
-}
-
-.container {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 20px;
 }
 
 a {
@@ -58,4 +52,37 @@ li {
 
 input {
   outline: transparent;
+}
+
+figure {
+  margin: 0;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .container {
+    max-width: 1400px;
+    width: 100%;
+    padding: 0 40px;
+    margin: 0 auto;
+  }
+
+  .header {
+    height: 90px;
+  }
+
+  .main {
+    flex: 1;
+    padding: 50px 0;
+  }
 }

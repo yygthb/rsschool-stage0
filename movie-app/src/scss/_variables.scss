@@ -6,6 +6,9 @@ $color-grey-light: #ddd;
 $color: (
   0: #e33258,
   1: #170409,
+  2: #ff847c,
+  3: #fecea8,
+  4: #99b898,
 );
 
 @function color($index) {
