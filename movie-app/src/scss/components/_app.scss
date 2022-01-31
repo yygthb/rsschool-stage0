@@ -2,6 +2,10 @@
   .app__title {
     margin-top: 20px;
     margin-bottom: 40px;
+
+    @include media(m) {
+      font-size: 32px;
+    }
   }
 
   .films {
@@ -9,7 +13,20 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 40px;
 
+    @include media(n) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include media(t) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media(m) {
+      grid-template-columns: 1fr;
+    }
+
     .film {
+      position: relative;
       cursor: pointer;
 
       .poster-overflow {
@@ -34,6 +51,7 @@
         .poster-wrapper {
           position: relative;
           display: block;
+          background-color: rgba(color(3), 0.2);
           @include aspect-ratio(2, 3);
         }
       }
@@ -43,6 +61,7 @@
         font-size: 18px;
         line-height: 24px;
         letter-spacing: 1px;
+        @include truncate-lines(1.2, 2);
         transition: color 0.3s ease;
       }
 
@@ -66,6 +85,24 @@
 
         .title {
           color: color(2);
+        }
+      }
+
+      .rating {
+        position: absolute;
+        z-index: 50;
+        top: 10px;
+        right: -10px;
+        padding: 3px 15px;
+        border-radius: 5px;
+        width: max-content;
+
+        &.rating__high {
+          background-color: color(0);
+        }
+
+        &.rating__low {
+          background-color: $color-rating-low;
         }
       }
     }

@@ -9,9 +9,7 @@ const submitBtn = document.querySelector('.button-submit');
 const app = document.querySelector('.app');
 const films = app.querySelector('.films');
 
-console.log('movie app');
-
-let genres = {};
+const genres = {};
 
 // form listeners
 resetBtn.addEventListener('click', (e) => {
@@ -39,6 +37,7 @@ function clearInput() {
 // app
 window.addEventListener('load', async (e) => {
   e.preventDefault();
+  console.log('movie app');
 
   // save genres
   const g = await getMovieGenres();
@@ -55,16 +54,18 @@ window.addEventListener('load', async (e) => {
     const data = await res.json();
     renderMovies(data);
   }
+
+  input.focus();
 });
 
 function renderMovies(data) {
   const results = data.results;
+  films.textContent = '';
 
   if (results && Array.isArray(results)) {
     console.log(results);
-    // get 12 top popular films with poster
     results
-      .filter((film) => film.poster_path && film.adult === false)
+      .filter((film) => film.adult === false)
       .splice(0, 12)
       .forEach((film) => {
         const el = createFilmCard(film);
@@ -85,10 +86,12 @@ function createNode(tag, className) {
 
 function createFilmCard(film) {
   const wrapper = createNode('div', 'film');
+
   // poster
   const cover = createNode('div', 'poster-overflow');
   const fig = createNode('figure', 'poster-wrapper');
   const img = createNode('img');
+  img.alt = `${film.title} poster`;
   img.src = `${posterRoute}${film.poster_path}`;
   fig.append(img);
   cover.append(fig);
@@ -96,6 +99,7 @@ function createFilmCard(film) {
 
   // title
   const title = createNode('h3', 'title');
+  title.title = film.title;
   title.textContent = film.title;
   wrapper.append(title);
 
@@ -103,11 +107,17 @@ function createFilmCard(film) {
   const info = createNode('p', 'info');
   const year = createNode('span', 'info__year');
   year.textContent = film.release_date.split('-')[0];
-
   const genre = createNode('span', 'info__genre');
   genre.textContent = genres[film.genre_ids[0]] || '';
   info.append(year, genre);
   wrapper.append(info);
+
+  // rating
+  const rate = createNode('p', 'rating');
+  const v = film.vote_average;
+  rate.classList.add(v > 7.5 ? 'rating__high' : 'rating__low');
+  rate.textContent = v;
+  wrapper.append(rate);
 
   // wrapper.textContent = `${film.original_title}`;
   return wrapper;

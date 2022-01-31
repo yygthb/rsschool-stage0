@@ -1,0 +1,26 @@
+// breakpoints
+// ----------------------------------
+$notebook-pb: 1100px;
+$tablet-pb: 768px;
+$mobile-pb: 500px;
+
+$breakpoints: (
+  n: $notebook-pb,
+  t: $tablet-pb,
+  m: $mobile-pb,
+);
+
+// viewport width < breakpoint
+// ----------------------------------
+@mixin media($bp) {
+  @if map-has-key($breakpoints, $bp) == true {
+    @media (max-width: map-get($breakpoints, $bp)) {
+      @content;
+    }
+  }
+  else {
+    @media (max-width: $bp) {
+      @content;
+    }
+  }
+}

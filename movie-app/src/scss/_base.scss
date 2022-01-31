@@ -58,12 +58,6 @@ figure {
   margin: 0;
 }
 
-.container {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
 .wrapper {
   width: 100%;
   min-height: 100vh;
@@ -75,6 +69,14 @@ figure {
     width: 100%;
     padding: 0 40px;
     margin: 0 auto;
+
+    @include media(t) {
+      padding: 0 20px;
+    }
+
+    @include media(m) {
+      padding: 0 10px;
+    }
   }
 
   .header {

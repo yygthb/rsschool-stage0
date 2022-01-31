@@ -11,7 +11,7 @@
     display: block;
     content: "";
     width: 100%;
-    padding: (100% / ($width / $height)) 0 0 0; // 100 / (w / h)
+    padding: (calc(100% / ($width / $height))) 0 0 0; // 100 / (w / h)
     z-index: 1;
   }
 
