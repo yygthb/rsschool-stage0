@@ -29,7 +29,7 @@ export const getPopularMovies = async () => {
   return fetchApi({}, api.route.popular);
 };
 
-export const getTmdbMoviesByTitle = async (title) => {
+export const getMoviesByTitle = async (title) => {
   const params = { query: title };
   return fetchApi(params, api.route.title);
 };

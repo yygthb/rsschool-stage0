@@ -1,4 +1,4 @@
-import { getMovieGenres, getPopularMovies } from './api.js';
+import { getMovieGenres, getPopularMovies, getMoviesByTitle } from './api.js';
 
 const posterRoute = 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2';
 
@@ -7,6 +7,7 @@ const input = form.querySelector('.input');
 const resetBtn = document.querySelector('.button-reset');
 const submitBtn = document.querySelector('.button-submit');
 const app = document.querySelector('.app');
+const appTitle = app.querySelector('.app__title');
 const films = app.querySelector('.films');
 
 const genres = {};
@@ -18,9 +19,21 @@ resetBtn.addEventListener('click', (e) => {
   input.focus();
 });
 
-submitBtn.addEventListener('click', (e) => {
+submitBtn.addEventListener('click', async (e) => {
   e.preventDefault();
   console.log(input.value);
+
+  // input validation
+  if (input.value.trim()) {
+    console.log(`input.value: "${input.value}"`);
+    // render films
+    const res = await getMoviesByTitle(input.value);
+    if (res.ok === true) {
+      const data = await res.json();
+      appTitle.textContent = `Results for "${input.value}":`;
+      renderMovies(data);
+    }
+  }
 });
 
 input.addEventListener('keyup', (e) => {
@@ -85,23 +98,25 @@ function createNode(tag, className) {
 }
 
 function createFilmCard(film) {
-  const wrapper = createNode('div', 'film');
+  const card = createNode('div', 'film');
 
   // poster
   const cover = createNode('div', 'poster-overflow');
   const fig = createNode('figure', 'poster-wrapper');
   const img = createNode('img');
-  img.alt = `${film.title} poster`;
+  img.alt = `${film.title} - film poster`;
   img.src = `${posterRoute}${film.poster_path}`;
   fig.append(img);
   cover.append(fig);
-  wrapper.append(cover);
+  card.append(cover);
 
   // title
+  const titleText = createNode('span', 'text');
   const title = createNode('h3', 'title');
   title.title = film.title;
-  title.textContent = film.title;
-  wrapper.append(title);
+  titleText.textContent = film.title;
+  title.append(titleText);
+  card.append(title);
 
   // info
   const info = createNode('p', 'info');
@@ -110,15 +125,14 @@ function createFilmCard(film) {
   const genre = createNode('span', 'info__genre');
   genre.textContent = genres[film.genre_ids[0]] || '';
   info.append(year, genre);
-  wrapper.append(info);
+  card.append(info);
 
   // rating
   const rate = createNode('p', 'rating');
-  const v = film.vote_average;
+  const v = film.vote_average || 0;
   rate.classList.add(v > 7.5 ? 'rating__high' : 'rating__low');
   rate.textContent = v;
-  wrapper.append(rate);
+  card.append(rate);
 
-  // wrapper.textContent = `${film.original_title}`;
-  return wrapper;
+  return card;
 }
