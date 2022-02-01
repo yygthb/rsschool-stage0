@@ -4,8 +4,10 @@ import {
   getMoviesByTitle,
   getMovieById,
 } from './transport.js';
+import { createNode, createRatingClassName } from './utils';
+import api from './api';
 
-const posterRoute = 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2';
+const posterRoute = api.route.poster;
 
 const form = document.querySelector('.form');
 const input = form.querySelector('.input');
@@ -31,10 +33,9 @@ window.addEventListener('load', async (e) => {
     });
   }
 
-  // console.log(window.location);
-
+  // routes
   const search = window.location.search;
-  if (search) {
+  if (search && search[0] === '?') {
     const query = {};
     const queryArr = search.slice(1, search.length).split('&');
     for (let item of queryArr) {
@@ -42,23 +43,15 @@ window.addEventListener('load', async (e) => {
       query[queryArr[0]] = queryArr[1];
     }
 
-    const id = query[Object.keys(query).find((item) => item === 'id')];
-    if (id) {
-      // render filmPage
-      console.log('film id: ', id);
-      const res = await getMovieById(id);
-      if (res.ok === true) {
-        const data = await res.json();
-        renderFilmInfo(data);
-      }
+    if (query.id) {
+      filmPage(query.id);
+    } else if (query.search) {
+      searchPage(query.search);
+    } else {
+      indexPage();
     }
   } else {
-    // render index
-    const res = await getPopularMovies();
-    if (res.ok === true) {
-      const data = await res.json();
-      renderMovies(data);
-    }
+    indexPage();
   }
 
   input.focus();
@@ -72,24 +65,8 @@ resetBtn.addEventListener('click', (e) => {
 });
 submitBtn.addEventListener('click', async (e) => {
   e.preventDefault();
-  const v = input.value;
-  console.log('v: ', v);
-
-  // is input !== ""
-  if (v.trim()) {
-    // render films
-    const res = await getMoviesByTitle(v);
-    if (res.ok === true) {
-      const data = await res.json();
-      window.history.replaceState(
-        {},
-        '',
-        window.location.pathname + `?search=titanic`
-      );
-      // window.location.search = `?search=test`;
-      appTitle.textContent = `Results for "${v}":`;
-      renderMovies(data);
-    }
+  if (input.value.trim()) {
+    searchPage(input.value.trim());
   }
 });
 input.addEventListener('keyup', (e) => {
@@ -102,32 +79,51 @@ function clearInput() {
   input.value = '';
 }
 
-// index page - render films collection
-function renderMovies(data) {
+// app pages
+async function indexPage() {
+  const res = await getPopularMovies();
+  if (res.ok === true) {
+    appTitle.textContent = 'Our recomendations:';
+    const data = await res.json();
+    renderFilmsList(data);
+  }
+}
+async function searchPage(title) {
+  const res = await getMoviesByTitle(title);
+  if (res.ok === true) {
+    const data = await res.json();
+    window.history.replaceState(
+      {},
+      '',
+      window.location.pathname + `?search=${title}`
+    );
+    appTitle.textContent = `Results for "${title.replace(/%20/g, ' ')}":`;
+    renderFilmsList(data);
+  }
+}
+async function filmPage(id) {
+  const res = await getMovieById(id);
+  if (res.ok === true) {
+    const data = await res.json();
+
+    appTitle.textContent = data.title;
+    // renderFilmInfo(data);
+  }
+}
+
+// app components
+function renderFilmsList(data) {
   const results = data.results;
   films.textContent = '';
 
   if (results && Array.isArray(results)) {
-    console.log(results);
-    results
-      // .splice(0, 12)
-      .forEach((film) => {
-        const el = createFilmCard(film);
-        films.append(el);
-      });
+    // console.log(results);
+    results.forEach((film) => {
+      const el = createFilmCard(film);
+      films.append(el);
+    });
   }
 }
-
-function createNode(tag, className) {
-  // className example: 'block block__element block__element_mod'
-  const el = document.createElement(tag);
-  if (className) {
-    const classNames = className.split(' ');
-    classNames.forEach((cn) => el.classList.add(cn));
-  }
-  return el;
-}
-
 function createFilmCard(film) {
   const card = createNode('a', 'film');
   card.href = window.location.pathname + `?id=${film.id}`;
@@ -165,23 +161,9 @@ function createFilmCard(film) {
   // rating
   const rate = createNode('p', 'rating');
   const v = film.vote_average || 0;
-  rate.classList.add(generateRatingClassName(v));
+  rate.classList.add(createRatingClassName(v));
   rate.textContent = v;
   card.append(rate);
 
   return card;
-}
-
-function generateRatingClassName(rate) {
-  if (rate >= 7.5) {
-    return 'rating__high';
-  } else if (rate >= 5) {
-    return 'rating__mid';
-  }
-  return 'rating__low';
-}
-
-function renderFilmInfo(film) {
-  appTitle.textContent = film.title;
-  console.log(film);
 }

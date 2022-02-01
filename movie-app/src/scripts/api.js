@@ -8,5 +8,6 @@ export default {
     genres: '/genre/movie/list',
     posterOriginal: 'https://image.tmdb.org/t/p/original',
     posterSmall: 'https://image.tmdb.org/t/p/w500',
+    poster: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2',
   },
 };
