@@ -2,19 +2,21 @@
   .app__title {
     margin-top: 20px;
     margin-bottom: 40px;
+    font-size: 40px;
 
     @include media(m) {
+      margin-top: 0;
       font-size: 32px;
     }
   }
 
   .films {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 40px;
 
     @include media(n) {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
     }
 
     @include media(t) {
@@ -93,16 +95,22 @@
         z-index: 50;
         top: 10px;
         left: -10px;
-        padding: 3px 15px;
-        border-radius: 5px;
         width: max-content;
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-size: 16px;
+        line-height: 1;
 
         &.rating__high {
           background-color: color(0);
         }
 
+        &.rating__mid {
+          background-color: $color-rating-mid;
+        }
+
         &.rating__low {
-          background-color: $color-rating-low;
+          background-color: $color-grey;
         }
       }
     }

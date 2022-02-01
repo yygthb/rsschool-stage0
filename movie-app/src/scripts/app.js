@@ -1,4 +1,9 @@
-import { getMovieGenres, getPopularMovies, getMoviesByTitle } from './api.js';
+import {
+  getMovieGenres,
+  getPopularMovies,
+  getMoviesByTitle,
+  getMovieById,
+} from './transport.js';
 
 const posterRoute = 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2';
 
@@ -11,41 +16,6 @@ const appTitle = app.querySelector('.app__title');
 const films = app.querySelector('.films');
 
 const genres = {};
-
-// form listeners
-resetBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  clearInput();
-  input.focus();
-});
-
-submitBtn.addEventListener('click', async (e) => {
-  e.preventDefault();
-  console.log(input.value);
-
-  // input validation
-  if (input.value.trim()) {
-    console.log(`input.value: "${input.value}"`);
-    // render films
-    const res = await getMoviesByTitle(input.value);
-    if (res.ok === true) {
-      const data = await res.json();
-      appTitle.textContent = `Results for "${input.value}":`;
-      renderMovies(data);
-    }
-  }
-});
-
-input.addEventListener('keyup', (e) => {
-  if (e.keyCode === 13) {
-    e.preventDefault();
-    submitBtn.click();
-  }
-});
-
-function clearInput() {
-  input.value = '';
-}
 
 // app
 window.addEventListener('load', async (e) => {
@@ -61,16 +31,78 @@ window.addEventListener('load', async (e) => {
     });
   }
 
-  // render films
-  const res = await getPopularMovies();
-  if (res.ok === true) {
-    const data = await res.json();
-    renderMovies(data);
+  // console.log(window.location);
+
+  const search = window.location.search;
+  if (search) {
+    const query = {};
+    const queryArr = search.slice(1, search.length).split('&');
+    for (let item of queryArr) {
+      const queryArr = item.split('=');
+      query[queryArr[0]] = queryArr[1];
+    }
+
+    const id = query[Object.keys(query).find((item) => item === 'id')];
+    if (id) {
+      // render filmPage
+      console.log('film id: ', id);
+      const res = await getMovieById(id);
+      if (res.ok === true) {
+        const data = await res.json();
+        renderFilmInfo(data);
+      }
+    }
+  } else {
+    // render index
+    const res = await getPopularMovies();
+    if (res.ok === true) {
+      const data = await res.json();
+      renderMovies(data);
+    }
   }
 
   input.focus();
 });
 
+// input
+resetBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  clearInput();
+  input.focus();
+});
+submitBtn.addEventListener('click', async (e) => {
+  e.preventDefault();
+  const v = input.value;
+  console.log('v: ', v);
+
+  // is input !== ""
+  if (v.trim()) {
+    // render films
+    const res = await getMoviesByTitle(v);
+    if (res.ok === true) {
+      const data = await res.json();
+      window.history.replaceState(
+        {},
+        '',
+        window.location.pathname + `?search=titanic`
+      );
+      // window.location.search = `?search=test`;
+      appTitle.textContent = `Results for "${v}":`;
+      renderMovies(data);
+    }
+  }
+});
+input.addEventListener('keyup', (e) => {
+  if (e.keyCode === 13) {
+    e.preventDefault();
+    submitBtn.click();
+  }
+});
+function clearInput() {
+  input.value = '';
+}
+
+// index page - render films collection
 function renderMovies(data) {
   const results = data.results;
   films.textContent = '';
@@ -78,8 +110,7 @@ function renderMovies(data) {
   if (results && Array.isArray(results)) {
     console.log(results);
     results
-      .filter((film) => film.adult === false)
-      .splice(0, 12)
+      // .splice(0, 12)
       .forEach((film) => {
         const el = createFilmCard(film);
         films.append(el);
@@ -87,8 +118,8 @@ function renderMovies(data) {
   }
 }
 
-// className example: 'block block__element block__element_mod'
 function createNode(tag, className) {
+  // className example: 'block block__element block__element_mod'
   const el = document.createElement(tag);
   if (className) {
     const classNames = className.split(' ');
@@ -98,14 +129,18 @@ function createNode(tag, className) {
 }
 
 function createFilmCard(film) {
-  const card = createNode('div', 'film');
+  const card = createNode('a', 'film');
+  card.href = window.location.pathname + `?id=${film.id}`;
+  // card.target = '_blank';
 
   // poster
   const cover = createNode('div', 'poster-overflow');
   const fig = createNode('figure', 'poster-wrapper');
   const img = createNode('img');
   img.alt = `${film.title} - film poster`;
-  img.src = `${posterRoute}${film.poster_path}`;
+  img.src = film.poster_path
+    ? `${posterRoute}${film.poster_path}`
+    : './assets/img/no-poster.jpg';
   fig.append(img);
   cover.append(fig);
   card.append(cover);
@@ -130,9 +165,23 @@ function createFilmCard(film) {
   // rating
   const rate = createNode('p', 'rating');
   const v = film.vote_average || 0;
-  rate.classList.add(v > 7.5 ? 'rating__high' : 'rating__low');
+  rate.classList.add(generateRatingClassName(v));
   rate.textContent = v;
   card.append(rate);
 
   return card;
+}
+
+function generateRatingClassName(rate) {
+  if (rate >= 7.5) {
+    return 'rating__high';
+  } else if (rate >= 5) {
+    return 'rating__mid';
+  }
+  return 'rating__low';
+}
+
+function renderFilmInfo(film) {
+  appTitle.textContent = film.title;
+  console.log(film);
 }
