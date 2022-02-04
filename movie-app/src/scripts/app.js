@@ -79,13 +79,15 @@ function clearInput() {
   input.value = '';
 }
 
-// app pages
+// app routes
 async function indexPage() {
   const res = await getPopularMovies();
   if (res.ok === true) {
     appTitle.textContent = 'Our recomendations:';
     const data = await res.json();
     renderFilmsList(data);
+  } else {
+    app.append(renderError());
   }
 }
 async function searchPage(title) {
@@ -99,15 +101,18 @@ async function searchPage(title) {
     );
     appTitle.textContent = `Results for "${title.replace(/%20/g, ' ')}":`;
     renderFilmsList(data);
+  } else {
+    app.append(renderError());
   }
 }
 async function filmPage(id) {
   const res = await getMovieById(id);
-  console.log('res: ', res);
   if (res.ok === true) {
     const data = await res.json();
     const filmCard = createFilmInfo(data);
     app.append(filmCard);
+  } else {
+    app.append(renderError());
   }
 }
 
@@ -117,7 +122,6 @@ function renderFilmsList(data) {
   films.textContent = '';
 
   if (results && Array.isArray(results)) {
-    // console.log(results);
     results.forEach((film) => {
       const filmCard = createFilmCard(film);
       films.append(filmCard);
@@ -168,7 +172,6 @@ function createFilmCard(film) {
   return card;
 }
 function createFilmInfo(film) {
-  console.log(film);
   let filmTitle = film.original_title;
   const filmYear = film.release_date && film.release_date.split('-')[0];
   const genres = film.genres.map((item) => item.name);
@@ -225,4 +228,24 @@ function createFilmInfo(film) {
   wrapper.append(rateEl);
 
   return wrapper;
+}
+function renderError() {
+  const error = createNode('div', 'error');
+
+  const errorTitle = createNode('h3');
+  errorTitle.textContent = 'OOOPS!';
+
+  const errorText1 = createNode('p');
+  errorText1.textContent = 'The resource requested could not be found.';
+
+  const errorText2 = createNode('p');
+  const text2 = createNode('span');
+  text2.textContent = 'Try later or go to ';
+  const link = createNode('a');
+  link.setAttribute('href', 'index.html');
+  link.textContent = 'home page';
+  errorText2.append(text2, link);
+
+  error.append(errorTitle, errorText1, errorText2);
+  return error;
 }
