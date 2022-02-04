@@ -2,11 +2,13 @@
 // ----------------------------------
 $notebook-pb: 1100px;
 $tablet-pb: 768px;
+$wide-mobile-pb: 500px;
 $mobile-pb: 400px;
 
 $breakpoints: (
   n: $notebook-pb,
   t: $tablet-pb,
+  wm: $wide-mobile-pb,
   m: $mobile-pb,
 );
 

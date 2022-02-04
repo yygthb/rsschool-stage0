@@ -7,7 +7,7 @@ import {
 import { createNode, createRatingClassName } from './utils';
 import api from './api';
 
-const posterRoute = api.route.poster;
+const noPosterSrc = './assets/img/no-poster.jpg';
 
 const form = document.querySelector('.form');
 const input = form.querySelector('.input');
@@ -15,7 +15,7 @@ const resetBtn = document.querySelector('.button-reset');
 const submitBtn = document.querySelector('.button-submit');
 const app = document.querySelector('.app');
 const appTitle = app.querySelector('.app__title');
-const films = app.querySelector('.films');
+const films = app.querySelector('.film__items');
 
 const genres = {};
 
@@ -57,7 +57,7 @@ window.addEventListener('load', async (e) => {
   input.focus();
 });
 
-// input
+// form
 resetBtn.addEventListener('click', (e) => {
   e.preventDefault();
   clearInput();
@@ -103,11 +103,11 @@ async function searchPage(title) {
 }
 async function filmPage(id) {
   const res = await getMovieById(id);
+  console.log('res: ', res);
   if (res.ok === true) {
     const data = await res.json();
-
-    appTitle.textContent = data.title;
-    // renderFilmInfo(data);
+    const filmCard = createFilmInfo(data);
+    app.append(filmCard);
   }
 }
 
@@ -119,13 +119,13 @@ function renderFilmsList(data) {
   if (results && Array.isArray(results)) {
     // console.log(results);
     results.forEach((film) => {
-      const el = createFilmCard(film);
-      films.append(el);
+      const filmCard = createFilmCard(film);
+      films.append(filmCard);
     });
   }
 }
 function createFilmCard(film) {
-  const card = createNode('a', 'film');
+  const card = createNode('a', 'film__item');
   card.href = window.location.pathname + `?id=${film.id}`;
   // card.target = '_blank';
 
@@ -135,8 +135,8 @@ function createFilmCard(film) {
   const img = createNode('img');
   img.alt = `${film.title} - film poster`;
   img.src = film.poster_path
-    ? `${posterRoute}${film.poster_path}`
-    : './assets/img/no-poster.jpg';
+    ? `${api.route.poster.w300}${film.poster_path}`
+    : noPosterSrc;
   fig.append(img);
   cover.append(fig);
   card.append(cover);
@@ -166,4 +166,63 @@ function createFilmCard(film) {
   card.append(rate);
 
   return card;
+}
+function createFilmInfo(film) {
+  console.log(film);
+  let filmTitle = film.original_title;
+  const filmYear = film.release_date && film.release_date.split('-')[0];
+  const genres = film.genres.map((item) => item.name);
+
+  const wrapper = createNode('div', 'film');
+
+  // poster
+  const fig = createNode('figure', 'poster-wrapper');
+  const img = createNode('img');
+  img.alt = `${film.title} - film poster`;
+  img.src = film.poster_path
+    ? `${api.route.poster.w500}${film.poster_path}`
+    : noPosterSrc;
+  fig.append(img);
+  wrapper.append(fig);
+
+  // title
+  const titleWr = createNode('div', 'title-wrapper');
+  const titleEl = createNode('h1', 'title');
+  if (filmYear) {
+    filmTitle = `${filmTitle} (${filmYear})`;
+  }
+  titleEl.textContent = filmTitle;
+  if (film.tagline) {
+    const taglineEl = createNode('p', 'tagline');
+    taglineEl.textContent = film.tagline;
+    titleWr.append(titleEl, taglineEl);
+  } else {
+    titleWr.append(titleEl);
+  }
+  wrapper.append(titleWr);
+
+  // genres
+  if (genres && genres.length) {
+    const genresEl = createNode('p', 'genres');
+    genresEl.textContent = genres.join(', ');
+    wrapper.append(genresEl);
+  }
+
+  // overview
+  if (film.overview) {
+    const overviewEl = createNode('p', 'overview');
+    overviewEl.textContent = film.overview;
+    wrapper.append(overviewEl);
+  }
+
+  // rating
+  const rateEl = createNode('p', 'rate');
+  const voteAverateEl = createNode('span', 'vote-value');
+  voteAverateEl.textContent = film.vote_average;
+  const voteCountEl = createNode('span', 'vote-count');
+  voteCountEl.textContent = film.vote_count;
+  rateEl.append(voteAverateEl, voteCountEl);
+  wrapper.append(rateEl);
+
+  return wrapper;
 }

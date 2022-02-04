@@ -10,7 +10,7 @@ module.exports = {
     main: './src/index.js',
   },
   output: {
-    filename: '[name].[hash].js',
+    filename: '[name].[fullhash].js',
     path: path.resolve(__dirname, 'dist'),
   },
   resolve: {
@@ -28,7 +28,7 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].[hash].css',
+      filename: '[name].[fullhash].css',
     }),
     new CopyPlugin({
       patterns: [
