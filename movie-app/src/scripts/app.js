@@ -19,6 +19,8 @@ const films = app.querySelector('.film__items');
 
 const genres = {};
 
+showLoader();
+
 // app
 window.addEventListener('load', async (e) => {
   e.preventDefault();
@@ -44,14 +46,14 @@ window.addEventListener('load', async (e) => {
     }
 
     if (query.id) {
-      filmPage(query.id);
+      runFilmPage(query.id);
     } else if (query.search) {
-      searchPage(query.search);
+      runSearchPage(query.search);
     } else {
-      indexPage();
+      runIndexPage();
     }
   } else {
-    indexPage();
+    runIndexPage();
   }
 
   input.focus();
@@ -66,7 +68,7 @@ resetBtn.addEventListener('click', (e) => {
 submitBtn.addEventListener('click', async (e) => {
   e.preventDefault();
   if (input.value.trim()) {
-    searchPage(input.value.trim());
+    runSearchPage(input.value.trim());
   }
 });
 input.addEventListener('keyup', (e) => {
@@ -80,17 +82,19 @@ function clearInput() {
 }
 
 // app routes
-async function indexPage() {
+async function runIndexPage() {
   const res = await getPopularMovies();
   if (res.ok === true) {
     appTitle.textContent = 'Our recomendations:';
     const data = await res.json();
     renderFilmsList(data);
+    hideLoader();
   } else {
     app.append(renderError());
+    hideLoader();
   }
 }
-async function searchPage(title) {
+async function runSearchPage(title) {
   const res = await getMoviesByTitle(title);
   if (res.ok === true) {
     const data = await res.json();
@@ -101,18 +105,22 @@ async function searchPage(title) {
     );
     appTitle.textContent = `Results for "${title.replace(/%20/g, ' ')}":`;
     renderFilmsList(data);
+    hideLoader();
   } else {
     app.append(renderError());
+    hideLoader();
   }
 }
-async function filmPage(id) {
+async function runFilmPage(id) {
   const res = await getMovieById(id);
   if (res.ok === true) {
     const data = await res.json();
     const filmCard = createFilmInfo(data);
     app.append(filmCard);
+    hideLoader();
   } else {
     app.append(renderError());
+    hideLoader();
   }
 }
 
@@ -248,4 +256,10 @@ function renderError() {
 
   error.append(errorTitle, errorText1, errorText2);
   return error;
+}
+function showLoader() {
+  app.classList.add('loading');
+}
+function hideLoader() {
+  app.classList.remove('loading');
 }

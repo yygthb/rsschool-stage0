@@ -1,0 +1,106 @@
+.film {
+  display: grid;
+  gap: 0 40px;
+  grid-template-columns: 300px 1fr auto;
+  grid-template-rows: max-content max-content 1fr;
+  grid-template-areas:
+    "poster title rate"
+    "poster genres ."
+    "poster overview .";
+
+  @include media(n) {
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: max-content max-content 1fr max-content;
+    grid-template-areas:
+      "poster title"
+      "poster genres"
+      "poster overview"
+      "poster rate";
+  }
+
+  @include media(t) {
+    grid-template-columns: 200px 1fr;
+    gap: 0 20px;
+  }
+
+  @include media(wm) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "rate"
+      "poster"
+      "genres"
+      "overview";
+  }
+
+  .poster-wrapper {
+    grid-area: poster;
+    height: max-content;
+    display: block;
+    background-color: rgba(color(3), 0.2);
+    @include aspect-ratio(2, 3);
+  }
+
+  .title-wrapper {
+    grid-auto-rows: title;
+
+    .title {
+      margin-bottom: 10px;
+      font-size: 40px;
+      line-height: 50px;
+
+      @include media(t) {
+        margin-bottom: 0;
+        font-size: 30px;
+        line-height: 40px;
+      }
+    }
+
+    .tagline {
+      font-size: 16px;
+    }
+  }
+
+  .genres {
+    grid-area: genres;
+    font-size: 18px;
+    color: color(3);
+  }
+
+  .overview {
+    margin-top: 40px;
+    grid-area: overview;
+    line-height: 28px;
+
+    @include media(t) {
+      margin-top: 20px;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  .rate {
+    grid-area: rate;
+
+    @include media(wm) {
+      text-align: end;
+    }
+
+    .vote-value {
+      font-size: 40px;
+      line-height: 50px;
+      font-weight: 700;
+      color: color(0);
+
+      @include media(t) {
+        font-size: 30px;
+      }
+    }
+
+    .vote-count {
+      padding-left: 10px;
+      font-size: 18px;
+      color: $color-grey-light;
+    }
+  }
+}
