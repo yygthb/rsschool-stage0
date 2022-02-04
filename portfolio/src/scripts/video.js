@@ -1,72 +1,74 @@
-const videoContainer = document.querySelector('.player');
-const video = videoContainer.querySelector('.player__video');
-video.volume = 0.5;
+const player = document.querySelector('.player');
+const video = player.querySelector('.player__video');
 
-// controls
-const mainBtn = videoContainer.querySelector('.button-play__main');
-const playerBtn = videoContainer.querySelector('.button-play');
-const volBtn = videoContainer.querySelector('.button-volume');
-const progress = videoContainer.querySelector('.player__progress');
-const progressBar = videoContainer.querySelector('.progress__filled');
-const volume = videoContainer.querySelector('.player__volume');
-const volumeBar = videoContainer.querySelector('.volume__filled');
-const volumeThumb = videoContainer.querySelector('.volume__thumb');
+// timer
+const currentTime = player.querySelector('.currenttime');
+const duration = player.querySelector('.duration');
+video.onloadedmetadata = () => {
+  updateTimerText(duration, video.duration);
+  updateTimerText(currentTime, video.currentTime);
+};
 
-// events
-let drag;
-let grap;
+// controls video
+const videoMainBtn = player.querySelector('.button-play__main');
+const playBtn = player.querySelector('.button-play');
+const progressBar = player.querySelector('.player__progress');
+const progressBarFilled = player.querySelector('.progress__filled');
 
-//
+videoMainBtn.addEventListener('click', togglePlay);
+playBtn.addEventListener('click', togglePlay);
+
+video.addEventListener('timeupdate', updateTime);
 video.addEventListener('ended', stopVideo);
-mainBtn.addEventListener('click', startVideo);
-playerBtn.addEventListener('click', toggleVideo);
-volBtn.addEventListener('click', toggleVolume);
-progress.addEventListener('mouseover', function () {
-  drag = true;
-});
-progress.addEventListener('mouseout', function () {
-  drag = false;
-  grap = false;
-});
-progress.addEventListener('mousedown', function () {
-  grap = drag;
-});
-progress.addEventListener('mouseup', function () {
-  grap = false;
-});
-progress.addEventListener('click', updateCurrentPos);
-progress.addEventListener('mousemove', function (e) {
-  if (drag && grap) {
-    updateCurrentPos(e);
-  }
-});
-volume.addEventListener('change', (e) => {
-  updateVol(e.target.value);
-});
+progressBar.oninput = (e) => {
+  updateProgress(e.target.value);
+};
 
-let progression;
-let volumeSaved = 50;
-
-function startVideo() {
-  videoContainer.classList.add('active');
-  video.play();
-  updateProgress();
-  progression = window.setInterval(updateProgress, 200);
-}
-
-function stopVideo() {
-  videoContainer.classList.remove('active');
-  video.pause();
-  clearInterval(progression);
-}
-
-function toggleVideo() {
-  if (video.paused) {
+function togglePlay() {
+  if (video.paused || video.ended) {
     startVideo();
   } else {
     stopVideo();
   }
 }
+
+function startVideo() {
+  player.classList.add('active');
+  video.play();
+}
+
+function stopVideo() {
+  player.classList.remove('active');
+  video.pause();
+}
+
+function updateTime() {
+  const progress = video.currentTime / video.duration;
+  progressBar.value = progress;
+  progressBarFilled.style.width = Math.floor(progress * 1000) / 10 + '%';
+  updateTimerText(currentTime, video.currentTime);
+}
+
+function updateProgress(v) {
+  video.currentTime = v * video.duration;
+  progressBar.value = v;
+  progressBarFilled.style.width = `${v * 100}%`;
+  updateTimerText(currentTime, video.currentTime);
+}
+
+// controls audio
+video.volume = 0.1;
+let volumeSaved = 10;
+
+const volumeBtn = player.querySelector('.button-volume');
+const volumeBar = player.querySelector('.player__volume');
+const volumeBarFilled = player.querySelector('.volume__filled');
+const volumeBarThumb = player.querySelector('.volume__thumb');
+
+volumeBtn.addEventListener('click', toggleVolume);
+volumeBar.oninput = (e) => {
+  updateVol(e.target.value);
+};
 
 function toggleVolume() {
   if (video.volume > 0) {
@@ -77,26 +79,29 @@ function toggleVolume() {
   }
 }
 
-function updateProgress() {
-  const progress = video.currentTime / video.duration;
-  progressBar.style.flexBasis = Math.floor(progress * 1000) / 10 + '%';
-}
-
-function updateCurrentPos(e) {
-  const { left, width } = progress.getBoundingClientRect();
-  const newProgress = (e.clientX - left) / width;
-  progressBar.style.flexBasis = Math.floor(newProgress * 1000) / 10 + '%';
-  video.currentTime = newProgress * video.duration;
-  startVideo();
-}
-
 function updateVol(v) {
   if (v > 0) {
-    volBtn.classList.remove('muted');
+    volumeBtn.classList.remove('muted');
   } else {
-    volBtn.classList.add('muted');
+    volumeBtn.classList.add('muted');
   }
-  volumeBar.style.width = `${v * 100}%`;
-  volumeThumb.style.left = `calc(${v * 100}% - 7px)`;
+  volumeBarFilled.style.width = `${v * 100}%`;
+  volumeBarThumb.style.left = `calc(${v * 100}% - 7px)`;
   video.volume = v;
+  volumeBar.value = v;
+}
+
+function updateTimerText(el, timer) {
+  const [mD, sD] = convertTimer(Math.floor(timer));
+  el.textContent = `${mD}:${sD}`;
+}
+
+function convertTimer(timer) {
+  const m = Math.floor(timer / 60);
+  const s = timer - m * 60;
+
+  const _m = `${Math.floor(m / 10)}${Math.floor(m % 10)}`;
+  const _s = `${Math.floor(s / 10)}${Math.floor(s % 10)}`;
+
+  return [_m, _s];
 }
