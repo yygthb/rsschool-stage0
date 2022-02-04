@@ -5,6 +5,10 @@
   overflow: hidden;
   background-color: $color-white;
 
+  @include media(t) {
+    width: 100%;
+  }
+
   .input,
   .button {
     border: none;
@@ -20,6 +24,10 @@
       font-size: 14px;
       opacity: 0.75;
     }
+
+    @include media(t) {
+      width: 100%;
+    }
   }
 
   .button {
@@ -30,6 +38,10 @@
 
     & ~ .button {
       margin-left: 5px;
+    }
+
+    @include media(wm) {
+      padding: 0 2px;
     }
   }
 

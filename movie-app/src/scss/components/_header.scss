@@ -11,6 +11,59 @@
       &-img {
         display: block;
         height: 50px;
+
+        @include media(m) {
+          height: 35px;
+        }
+      }
+    }
+
+    .form-wrapper {
+      position: relative;
+      margin-left: 50px;
+
+      @include media(t) {
+        width: 100%;
+      }
+
+      @include media(wm) {
+        margin-left: 20px;
+      }
+
+      .form {
+        @include media(t) {
+          opacity: 0;
+          transition: opacity 0.5s ease;
+        }
+      }
+
+      .show-form {
+        position: absolute;
+        top: 4px;
+        right: 0;
+        display: none;
+        background-color: transparent;
+        border: none;
+
+        .icon {
+          fill: white;
+        }
+
+        @include media(t) {
+          display: block;
+        }
+      }
+
+      &.open {
+        .form {
+          display: flex;
+          width: 100%;
+          opacity: 1;
+          transition: opacity 0.5s ease;
+        }
+        .show-form {
+          display: none;
+        }
       }
     }
   }
