@@ -14,8 +14,7 @@ const input = form.querySelector('.input');
 const resetBtn = document.querySelector('.button-reset');
 const submitBtn = document.querySelector('.button-submit');
 const app = document.querySelector('.app');
-const appTitle = app.querySelector('.app__title');
-const films = app.querySelector('.film__items');
+const appContent = app.querySelector('.app-content');
 
 const genres = {};
 
@@ -24,7 +23,6 @@ showLoader();
 // app
 window.addEventListener('load', async (e) => {
   e.preventDefault();
-  console.log('movie app');
 
   // save genres
   const g = await getMovieGenres();
@@ -85,7 +83,6 @@ function clearInput() {
 async function runIndexPage() {
   const res = await getPopularMovies();
   if (res.ok === true) {
-    appTitle.textContent = 'Our recomendations:';
     const data = await res.json();
     renderFilmsList(data);
     hideLoader();
@@ -103,8 +100,7 @@ async function runSearchPage(title) {
       '',
       window.location.pathname + `?search=${title}`
     );
-    appTitle.textContent = `Results for "${title.replace(/%20/g, ' ')}":`;
-    renderFilmsList(data);
+    renderFilmsList(data, title);
     hideLoader();
   } else {
     app.append(renderError());
@@ -116,24 +112,33 @@ async function runFilmPage(id) {
   if (res.ok === true) {
     const data = await res.json();
     const filmCard = createFilmInfo(data);
-    app.append(filmCard);
+    appContent.append(filmCard);
     hideLoader();
   } else {
-    app.append(renderError());
+    appContent.append(renderError());
     hideLoader();
   }
 }
 
 // app components
-function renderFilmsList(data) {
-  const results = data.results;
-  films.textContent = '';
+function renderFilmsList(data, title) {
+  resetContent();
+  const appTitle = createNode('h2', 'app__title');
+  if (title) {
+    appTitle.textContent = `Results for "${title.replace(/%20/g, ' ')}":`;
+  } else {
+    appTitle.textContent = 'Our recomendations:';
+  }
+  appContent.append(appTitle);
 
+  const results = data.results;
   if (results && Array.isArray(results)) {
+    const films = createNode('div', 'film__items');
     results.forEach((film) => {
       const filmCard = createFilmCard(film);
       films.append(filmCard);
     });
+    appContent.append(films);
   }
 }
 function createFilmCard(film) {
@@ -262,4 +267,7 @@ function showLoader() {
 }
 function hideLoader() {
   app.classList.remove('loading');
+}
+function resetContent() {
+  appContent.textContent = '';
 }

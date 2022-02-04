@@ -4,9 +4,7 @@
   }
 
   &.loading {
-    .app__title,
-    .film__items,
-    .film {
+    .app-content {
       display: none;
     }
 
