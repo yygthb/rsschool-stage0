@@ -1,6 +1,8 @@
 const player = document.querySelector('.player');
 const video = player.querySelector('.player__video');
 
+const colorPrimary = '#bdae82';
+
 // timer
 const currentTime = player.querySelector('.currenttime');
 const duration = player.querySelector('.duration');
@@ -13,7 +15,6 @@ video.onloadedmetadata = () => {
 const videoMainBtn = player.querySelector('.button-play__main');
 const playBtn = player.querySelector('.button-play');
 const progressBar = player.querySelector('.player__progress');
-const progressBarFilled = player.querySelector('.progress__filled');
 
 videoMainBtn.addEventListener('click', togglePlay);
 playBtn.addEventListener('click', togglePlay);
@@ -45,25 +46,27 @@ function stopVideo() {
 function updateTime() {
   const progress = video.currentTime / video.duration;
   progressBar.value = progress;
-  progressBarFilled.style.width = Math.floor(progress * 1000) / 10 + '%';
+
+  const pc = Math.floor(progress * 1000) / 10 + '%';
+  progressBar.style.background = `linear-gradient(to right, ${colorPrimary} ${pc}, #ffffff4d ${pc})`;
   updateTimerText(currentTime, video.currentTime);
 }
 
 function updateProgress(v) {
   video.currentTime = v * video.duration;
   progressBar.value = v;
-  progressBarFilled.style.width = `${v * 100}%`;
+
+  const pc = v * 100 + '%';
+  progressBar.style.background = `linear-gradient(to right, ${colorPrimary} ${pc}, #ffffff4d ${pc})`;
   updateTimerText(currentTime, video.currentTime);
 }
 
 // controls audio
-video.volume = 0.1;
-let volumeSaved = 10;
+video.volume = 0.5;
+let volumeSaved = 50;
 
 const volumeBtn = player.querySelector('.button-volume');
 const volumeBar = player.querySelector('.player__volume');
-const volumeBarFilled = player.querySelector('.volume__filled');
-const volumeBarThumb = player.querySelector('.volume__thumb');
 
 volumeBtn.addEventListener('click', toggleVolume);
 volumeBar.oninput = (e) => {
@@ -85,10 +88,11 @@ function updateVol(v) {
   } else {
     volumeBtn.classList.add('muted');
   }
-  volumeBarFilled.style.width = `${v * 100}%`;
-  volumeBarThumb.style.left = `calc(${v * 100}% - 7px)`;
   video.volume = v;
   volumeBar.value = v;
+
+  const pc = v * 100 + '%';
+  volumeBar.style.background = `linear-gradient(to right, ${colorPrimary} ${pc}, #ffffff4d ${pc})`;
 }
 
 function updateTimerText(el, timer) {
