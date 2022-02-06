@@ -7,7 +7,7 @@
     <title>Portfolio</title>
 
     <link rel="icon" href="./assets/img/favicon.ico" type="image/x-icon" />
-    <link href="main.1c5949d34f0d261afd9f.css" rel="stylesheet" />
+    <link href="main.d6b9bfb233d482bd16b6.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -241,13 +241,72 @@
           <div class="title-container">
             <h2 class="section-title" data-i18n="video">Video</h2>
           </div>
-          <div class="video-container">
-            <img alt="video-player bg wrapper" class="video-player" />
-            <button class="play-button">
-              <svg>
-                <use xlink:href="./assets/svg/sprite.svg#video-play"></use>
-              </svg>
-            </button>
+          <div class="test">
+            <div class="player">
+              <video
+                class="player__video"
+                src="./assets/video/video.mp4"
+                poster="./assets/video/poster.jpg"
+              >
+                >
+              </video>
+              <button class="button-play__main">
+                <svg>
+                  <use xlink:href="./assets/svg/sprite.svg#video-play"></use>
+                </svg>
+              </button>
+              <div class="player__controls">
+                <input
+                  class="player__progress"
+                  type="range"
+                  name="progress"
+                  min="0"
+                  max="1"
+                  step="0.001"
+                  value="0"
+                />
+                <div class="player__controls-row">
+                  <button class="player__button button-play">
+                    <svg class="player__button-play">
+                      <use xlink:href="./assets/svg/sprite.svg#play"></use>
+                    </svg>
+                    <svg class="player__button-pause">
+                      <use xlink:href="./assets/svg/sprite.svg#pause"></use>
+                    </svg>
+                  </button>
+
+                  <button class="player__button button-volume">
+                    <svg class="player__button-volume">
+                      <use
+                        xlink:href="./assets/svg/sprite.svg#sound-full"
+                      ></use>
+                    </svg>
+                    <svg class="player__button-mute">
+                      <use
+                        xlink:href="./assets/svg/sprite.svg#sound-mute"
+                      ></use>
+                    </svg>
+                  </button>
+
+                  <input
+                    class="player__volume"
+                    type="range"
+                    name="volume"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0.5"
+                    autocomplete="off"
+                  />
+
+                  <div class="player__timer">
+                    <span class="currenttime">00:00</span>
+                    /
+                    <span class="duration">00:00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -462,6 +521,8 @@
     </footer>
 
     <div class="overlay" data-close="menu"></div>
-    <script defer="defer" src="main.1c5949d34f0d261afd9f.js"></script>
+    <script defer="defer" src="main.d6b9bfb233d482bd16b6.js"></script>
+    <script defer="defer" src="video.d6b9bfb233d482bd16b6.js"></script>
+    <script defer="defer" src="review.d6b9bfb233d482bd16b6.js"></script>
   </body>
 </html>
