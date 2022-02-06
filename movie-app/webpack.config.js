@@ -12,6 +12,7 @@ module.exports = {
   devtool: isProd ? false : 'source-map',
   entry: {
     main: './src/index.js',
+    review: './src/scripts/review.js',
   },
   output: {
     filename: '[name].[contenthash].js',
