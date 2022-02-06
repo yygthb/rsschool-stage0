@@ -6,4 +6,3 @@ import './scripts/translate.js';
 import './scripts/form.js';
 import './scripts/portfolio.js';
 import './scripts/button.js';
-import './scripts/review.js';
