@@ -8,6 +8,7 @@ module.exports = {
   mode: 'development',
   entry: {
     main: './src/index.js',
+    // video: './src/scripts/video.js',
   },
   output: {
     filename: '[name].[fullhash].js',
@@ -47,6 +48,10 @@ module.exports = {
         {
           from: path.resolve(__dirname, 'src/assets/video'),
           to: path.resolve(__dirname, 'dist/assets/video'),
+        },
+        {
+          from: path.resolve(__dirname, 'src/scripts/video.js'),
+          to: path.resolve(__dirname, 'dist/video.js'),
         },
       ],
     }),
