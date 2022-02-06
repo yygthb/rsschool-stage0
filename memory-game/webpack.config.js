@@ -13,6 +13,7 @@ module.exports = {
   entry: {
     main: './src/index.js',
     result: './src/scripts/results.js',
+    review: './src/scripts/review.js',
   },
   output: {
     filename: '[name].[fullhash].js',
