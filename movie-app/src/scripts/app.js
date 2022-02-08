@@ -46,7 +46,7 @@ window.addEventListener('load', async (e) => {
     if (query.id) {
       runFilmPage(query.id);
     } else if (query.search) {
-      runSearchPage(query.search);
+      runSearchPage(decodeURIComponent(query.search));
     } else {
       runIndexPage();
     }
